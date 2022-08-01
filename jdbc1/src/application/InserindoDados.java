@@ -16,11 +16,12 @@ public class InserindoDados {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		Connection conn = null;
-		PreparedStatement ps = null;
+		PreparedStatement st = null;
 		
 		try {
 			conn = DB.getConnection();
-			ps = conn.prepareStatement(
+			
+			st = conn.prepareStatement(
 				"INSERT INTO SELLER (Name,Email,BirthDate,BaseSalary,DepartmentId) "
 				+ "VALUES"
 				+"(?,?,?,?,?)",			//Valores serão preenchidos depois
@@ -28,20 +29,23 @@ public class InserindoDados {
 			
 			//Preencher os valores das interrogações
 			//Primeiro argumento é a posição da Interrogação, e o segundo é o valor que será passado
-			ps.setString(1, "Carl Purple");			//Nome
-			ps.setString(2, "carl@gmail.com");		//Email
-			ps.setDate(3, new java.sql.Date(sdf.parse("22/04/1985").getTime()));	//Data de Nascimento
-			ps.setDouble(4, 3000.0);				//Salario
-			ps.setInt(5, 4);						//Id do Departamento
-			
-			int rowsAffect = ps.executeUpdate();	//Serve 
+			st.setString(1, "Carl Purple");			//Nome
+			st.setString(2, "carl@gmail.com");		//Email
+			st.setDate(3, new java.sql.Date(sdf.parse("22/04/1985").getTime()));	//Data de Nascimento
+			st.setDouble(4, 3000.0);				//Salario
+			st.setInt(5, 4);						//Id do Departamento
+
+//			st = conn.prepareStatement("insert into department (Name) values ('D1'),('D2')",
+//					Statement.RETURN_GENERATED_KEYS);
+
+			int rowsAffect = st.executeUpdate();	//Executa a query e retonar um "int" com o numero de linhas afetadas
 			
 			if (rowsAffect > 0) {
-				ResultSet rs = ps.getGeneratedKeys();	//Pega os IDs dos elementos que foram criados, e retorna um ResultSet
+				ResultSet rs = st.getGeneratedKeys();	//Pega os IDs dos elementos que foram criados, e retorna um ResultSet
 				
 				while(rs.next()) {			
 					int id = rs.getInt(1);
-					System.out.println("Done! Id = " + id);
+					System.out.println("Created! Id = " + id);
 				}
 			}	
 			else {
@@ -53,9 +57,9 @@ public class InserindoDados {
 		}
 		catch (ParseException e) {
 			e.printStackTrace();
-		}
+		}		
 		finally {
-			DB.closeStatement(ps);
+			DB.closeStatement(st);
 			DB.closeConnections();
 		}
 	}

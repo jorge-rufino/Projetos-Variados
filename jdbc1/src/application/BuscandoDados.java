@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 import db.DB;
 
-public class BuscandoDadosNoBanco {
+public class BuscandoDados {
 
 	public static void main(String[] args) {
 
