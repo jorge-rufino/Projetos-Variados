@@ -17,7 +17,7 @@ public class Curso {
 	}
 	
 	public List<Aula> getAulas(){
-//	Devolve uma cópia da Lista e que não pode ser modificada, ou seja, nao se pode chamar o metodo "add()" através dele	
+//	Devolve uma c�pia da Lista e que não pode ser modificada, ou seja, nao se pode chamar o metodo "add()" através dele	
 		return Collections.unmodifiableList(aulas);
 	}
 	
