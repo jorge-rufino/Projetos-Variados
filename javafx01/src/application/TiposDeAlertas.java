@@ -1,111 +1,51 @@
 package application;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class TiposDeAlertas extends Application {
-	 
-    // launch the application
-    public void start(Stage s)
-    {
-        // set title for the stage
-        s.setTitle("creating alerts");
- 
-        // create a button
-        Button b = new Button("Confirmation alert");
-        Button b1 = new Button("error alert");
-        Button b2 = new Button("Information alert");
-        Button b3 = new Button("Warning alert");
- 
-        // create a tile pane
-        TilePane r = new TilePane();
- 
-        // create a alert
-        Alert a = new Alert(AlertType.NONE);
- 
-        // action event
-        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
-        	
-            public void handle(ActionEvent e)
-            {
-                // set alert type
-                a.setAlertType(AlertType.CONFIRMATION);
- 
-                // show the dialog
-                a.show();
-            }
-        };
- 
-        // action event
-        EventHandler<ActionEvent> event1 = new
-                         EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e)
-            {
-                // set alert type
-                a.setAlertType(AlertType.ERROR);
- 
-                // show the dialog
-                a.show();
-            }
-        };
- 
-        // action event
-        EventHandler<ActionEvent> event2 = new
-                         EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e)
-            {
-                // set alert type
-                a.setAlertType(AlertType.INFORMATION);
- 
-                // show the dialog
-                a.show();
-            }
-        };
- 
-        // action event
-        EventHandler<ActionEvent> event3 = new
-                          EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e)
-            {
-                // set alert type
-                a.setAlertType(AlertType.WARNING);
- 
-                // show the dialog
-                a.show();
-            }
-        };
- 
-        // when button is pressed
-        b.setOnAction(event);
-        b1.setOnAction(event1);
-        b2.setOnAction(event2);
-        b3.setOnAction(event3);
- 
-        // add button
-        r.getChildren().add(b);
-        r.getChildren().add(b1);
-        r.getChildren().add(b2);
-        r.getChildren().add(b3);
- 
-        // create a scene
-        Scene sc = new Scene(r, 200, 200);
- 
-        // set the scene
-        s.setScene(sc);
- 
-        s.show();
+
+    @Override
+    public void start(Stage stage) {
+        Button btnInfo = new Button("Mostrar diálogo de informação");
+        Button btnErro = new Button("Mostrar diálogo de error");
+        Button btnAviso = new Button("Mostrar diálogo de aviso");
+
+        btnInfo.setOnAction(e -> {
+            Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
+            dialogoInfo.setTitle("Diálogo de informação");
+            dialogoInfo.setHeaderText("Esse é o cabeçalho...");
+            dialogoInfo.setContentText("Informação importante!");
+            dialogoInfo.showAndWait();
+        });
+        btnErro.setOnAction(e -> {
+            Alert dialogoErro = new Alert(Alert.AlertType.ERROR);
+            dialogoErro.setTitle("Diálogo de Error");
+            dialogoErro.setHeaderText("Esse é o cabeçalho...");
+            dialogoErro.setContentText("UM ERROR!!! UM ERRO ACONTECEU!!! GEZUIS!");
+            dialogoErro.showAndWait();
+        });
+        btnAviso.setOnAction(e -> {
+            Alert dialogoAviso = new Alert(Alert.AlertType.WARNING);
+            dialogoAviso.setTitle("Diálogo de Aviso");
+            dialogoAviso.setHeaderText("Esse é o cabeçalho...");
+            dialogoAviso.setContentText("AVISO IMPORTANTE! TENHA EM MENTE ISSO!");
+            dialogoAviso.showAndWait();
+        });
+
+        VBox raiz = new VBox(20);
+        raiz.setAlignment(Pos.CENTER);
+        raiz.getChildren().addAll(btnInfo, btnErro, btnAviso);
+
+        Scene cena = new Scene(raiz, 450, 200);
+        stage.setTitle("Diálogos de erro e informação");
+        stage.setScene(cena);
+        stage.show();
     }
- 
-    public static void main(String args[])
-    {
-        // launch the application
-        launch(args);
-    }
+
 }
