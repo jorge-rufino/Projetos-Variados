@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ExemploLista {
+public class ExemploStream {
 
 	public static void main(String[] args) {
 		List<String> nomes = new ArrayList<>();

@@ -3,7 +3,7 @@ package application;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExemploLista2 {
+public class ExemploStream2 {
 
 	public static void main(String[] args) {
 		List<Cliente> clientes = new ArrayList<>();
