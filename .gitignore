@@ -26,3 +26,12 @@ hs_err_pid*
 .settings/
 /bin/
 .metadata/
+
+# build folders
+bin/
+target/
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/ 

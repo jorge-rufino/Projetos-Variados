@@ -40,7 +40,7 @@ public class DialogosEntradas extends Application {
         });
         btnRegiao.setOnAction(e -> {
             // o primeiro parâmetro é a escola padrão e os outros são os valores da Choice Box
-            ChoiceDialog dialogoRegiao = new ChoiceDialog("Sul", "Sul", "Leste", "Oeste", "Norte");
+            ChoiceDialog<String> dialogoRegiao = new ChoiceDialog<String>("Sul", "Suldeste", "Leste", "Oeste", "Norte");
             dialogoRegiao.setTitle("Entrada de Região");
             dialogoRegiao.setHeaderText("Informe sua região abaixo");
             dialogoRegiao.setContentText("Região:");
