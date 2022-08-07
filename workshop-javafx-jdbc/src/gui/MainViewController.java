@@ -3,6 +3,7 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import application.Main;
 import gui.util.Alerts;
@@ -33,11 +34,14 @@ public class MainViewController implements Initializable {
 	}
 
 	public void onMenuItemSellerDepartmentAction() {
-		loadView2("/gui/DepartmentListView.fxml");
+		loadView("/gui/DepartmentListView.fxml", (DepartmentController controller ) -> {
+			controller.setDepartmentService(new DepartmentService());
+			controller.updateTableView();
+		});
 	}
 
 	public void onMenuItemSellerAboutAction() {
-		loadView("/gui/AboutView.fxml");
+		loadView("/gui/AboutView.fxml", x -> {});
 	}
 
 	@Override
@@ -47,7 +51,7 @@ public class MainViewController implements Initializable {
 	}
 
 	//"synchronized" garante que o processamento de todo este método não será interrompido durante o multithreading
-	private synchronized void loadView(String absoluteName) {
+	private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction ) {
 		try {
 //Para carregar uma view dentro da VBox principal, temos que pegar ela e transformar em uma Children/filha do VBoxPrincipal
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
@@ -63,34 +67,15 @@ public class MainViewController implements Initializable {
 			mainVbox.getChildren().add(mainMenu);	//Adicionou novamente o MenuBar
 			mainVbox.getChildren().addAll(newVBox.getChildren());	//Adicionou todos os filhos da VBox da outra tela como filhos da VBox principal
 			
+			//Pega o controller do Consumer
+			T controller = loader.getController();
+			
+			//Executa as funçoes do controller
+			initializingAction.accept(controller);
 		}
 		catch (IOException e) {
 			Alerts.showAlert("IO Excepetion", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}
-	
-	private synchronized void loadView2(String absoluteName) {
-		try {
-//Para carregar uma view dentro da VBox principal, temos que pegar ela e transformar em uma Children/filha do VBoxPrincipal
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-			VBox newVBox = loader.load();
-			
-			Scene mainScene = Main.getMainScene();	
-			VBox mainVbox = (VBox)((ScrollPane)mainScene.getRoot()).getContent();	
-			
-			//Pega o filho da VBox principal na posiçao 0 que no caso é o MenuBar
-			Node mainMenu = mainVbox.getChildren().get(0);	
-			
-			mainVbox.getChildren().clear(); //Limpou todos os filhos 
-			mainVbox.getChildren().add(mainMenu);	//Adicionou novamente o MenuBar
-			mainVbox.getChildren().addAll(newVBox.getChildren());	//Adicionou todos os filhos da VBox da outra tela como filhos da VBox principal
-			
-			DepartmentController controller = loader.getController();	//Criou a referencia para o controller da classe Department
-			controller.setDepartmentService(new DepartmentService());	//Criou o serviço para poder chamar o metodo updateTableView
-			controller.updateTableView();								//Chama o metodo para atualizar a tabela
-		}
-		catch (IOException e) {
-			Alerts.showAlert("IO Excepetion", "Error loading view", e.getMessage(), AlertType.ERROR);
-		}
-	}
+		
 }

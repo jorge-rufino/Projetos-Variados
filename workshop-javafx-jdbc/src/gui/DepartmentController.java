@@ -43,7 +43,7 @@ public class DepartmentController implements Initializable{
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		initializeNodes();
+		initializeNodes();		
 	}
 
 	//Injecao de Dependencia
