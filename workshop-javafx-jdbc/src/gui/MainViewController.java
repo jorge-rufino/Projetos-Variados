@@ -50,10 +50,11 @@ public class MainViewController implements Initializable {
 
 	}
 
+	//Este método carrega as views dentro do Stage principal
 	//"synchronized" garante que o processamento de todo este método não será interrompido durante o multithreading
 	private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction ) {
 		try {
-//Para carregar uma view dentro da VBox principal, temos que pegar ela e transformar em uma Children/filha do VBoxPrincipal
+			//Para carregar uma view dentro da VBox principal, temos que pegar ela e transformar em uma Children/filha do VBoxPrincipal
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox newVBox = loader.load();
 			
@@ -61,6 +62,7 @@ public class MainViewController implements Initializable {
 			VBox mainVbox = (VBox)((ScrollPane)mainScene.getRoot()).getContent();	
 			
 			//Pega o filho da VBox principal na posiçao 0 que no caso é o MenuBar
+			//Se tivessem outros childrens/filhos, teriamos que ir pegando todos para adicionar na ordem novamente
 			Node mainMenu = mainVbox.getChildren().get(0);	
 			
 			mainVbox.getChildren().clear(); //Limpou todos os filhos 
