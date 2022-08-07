@@ -13,4 +13,13 @@ public class Utils {
 		//3 - Faz o downcasting para o Stage
 		return (Stage) ((Node) event.getSource()).getScene().getWindow();
 	}
+	
+	//Converte uma STring para int e se nao conseguir, retorna "null"
+	public static Integer tryParseToInt (String str) {
+		try {
+			return Integer.parseInt(str);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
 }

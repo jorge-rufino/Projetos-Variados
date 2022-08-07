@@ -91,6 +91,7 @@ public class DepartmentController implements Initializable{
 			
 			DepartmentFormController controller = loader.getController();
 			controller.setDepartment(obj);
+			controller.setDepartmentService(new DepartmentService());
 			controller.updateFormData();
 			
 			//Cria um novo Stage/Palco que vai ficar por cima do Stage principal
