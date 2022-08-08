@@ -1,0 +1,59 @@
+CREATE TABLE categoria (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(30)    
+)
+
+CREATE TABLE endereco (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    rua VARCHAR(50) ,
+    bairro VARCHAR(50) ,
+    complemento VARCHAR(50) ,
+    cidade VARCHAR(50)    
+)
+
+CREATE TABLE pessoa (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    apelido VARCHAR(50),
+    cpf VARCHAR(14),
+    sexo VARCHAR(1),
+    email VARCHAR(255),
+    data_cadastro DATE NOT NULL,
+    idCategoria INT,
+    idEndereco INT,
+    
+    FOREIGN KEY fk_pessoa_categoria (idCategoria) REFERENCES categoria(id) ON UPDATE NO ACTION ON DELETE NO ACTION,
+    FOREIGN KEY fk_pessoa_endereco  (idEndereco) REFERENCES endereco(id) ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+
+CREATE TABLE telefone (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    ddd VARCHAR(3) NOT NULL,
+    numero VARCHAR(50) NOT NULL,
+    tipo VARCHAR(50), 
+    idPessoa INT NOT NULL,   
+       
+    FOREIGN KEY fk_telefone_pessoa (idPessoa) REFERENCES pessoa(id) ON UPDATE NO ACTION ON DELETE NO ACTION 
+)
+
+# Populando Categoria
+INSERT INTO `agenda`.`categoria` (`id`, `nome`) VALUES ('1', 'Amigos');
+INSERT INTO `agenda`.`categoria` (`id`, `nome`) VALUES ('2', 'Familia');
+INSERT INTO `agenda`.`categoria` (`id`, `nome`) VALUES ('3', 'Trabalho');
+
+# Populando Endereco
+INSERT INTO `agenda`.`endereco` (`id`, `rua`, `bairo`, `complemento`, `cidade`) VALUES ('1', 'Av Joao Fanjas', 'Centro', 'Fundos', 'Benevides');
+INSERT INTO `agenda`.`endereco` (`id`, `rua`, `bairo`, `cidade`) VALUES ('2', 'Rua Joaquim Pereira de Queiroz', 'Maguari', 'Benevides');
+INSERT INTO `agenda`.`endereco` (`id`, `rua`, `bairo`, `complemento`, `cidade`) VALUES ('3', 'Av Almirante Barroso', 'Entroncamento', 'prox ao elevado', 'Belem');
+
+# Populando Pessoa
+INSERT INTO `agenda`.`pessoa` (`id`, `nome`, `apelido`, `sexo`, `email`, `data_cadastro`, `idCategoria`, `idEndereco`) VALUES ('1', 'Angela Rufino', 'mãe', 'f', 'angela@gmail.com', '2022-08-08 08:00:00', '2', '1');
+INSERT INTO `agenda`.`pessoa` (`id`, `nome`, `apelido`, `sexo`, `email`, `data_cadastro`, `idCategoria`, `idEndereco`) VALUES ('2', 'Daniel Lira', 'tio Dan', 'm', 'daniel@gmail.com', '2022-08-08 08:30:00', '1', '2');
+INSERT INTO `agenda`.`pessoa` (`id`, `nome`, `apelido`, `sexo`, `email`, `data_cadastro`, `idCategoria`, `idEndereco`) VALUES ('3', 'Cleiton Silveira', 'cleitote', 'm', 'cleiton@gmail.com', '202-08-08 10:01:00', '3', '3');
+
+# Populando Telefone
+INSERT INTO `agenda`.`telefone` (`id`, `ddd`, `numero`, `tipo`, `idPessoa`) VALUES ('1', '091', '98569-4125', 'celular', '1');
+INSERT INTO `agenda`.`telefone` (`id`, `ddd`, `numero`, `tipo`, `idPessoa`) VALUES ('2', '091', '3724-2851', 'fixo', '2');
+INSERT INTO `agenda`.`telefone` (`id`, `ddd`, `numero`, `tipo`, `idPessoa`) VALUES ('3', '091', '98832-5841', 'celular', '3');
+INSERT INTO `agenda`.`telefone` (`id`, `ddd`, `numero`, `tipo`, `idPessoa`) VALUES ('4', '091', '3724-5511', 'fixo', '1');
+
