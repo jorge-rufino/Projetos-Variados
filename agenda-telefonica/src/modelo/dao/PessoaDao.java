@@ -11,7 +11,6 @@ public interface PessoaDao {
 	void update (Pessoa obj);
 	void deleteById (Integer id);
 	Pessoa findById (Integer id);
-//	List<Pessoa> findByFields(String name, String email, Double salary, String depName);	
 	List<Pessoa> findAll();
 	List<Pessoa> findByEndereco(Endereco endereco);
 	List<Pessoa> findByCategoria(Categoria categoria);

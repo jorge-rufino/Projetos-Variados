@@ -1,5 +1,6 @@
 package application;
 
+import model.entities.Categoria;
 import modelo.dao.CategoriaDao;
 import modelo.dao.DaoFactory;
 
@@ -23,7 +24,14 @@ public class Programm {
 //		System.out.println(novaCategoria); 		
 		
 		System.out.println("\n===========update============");
+		Categoria categoria = categoriaDao.findById(4);
+		categoria.setNome("Faculdade");
+		categoriaDao.update(categoria);
+		System.out.println(categoriaDao.findById(4));
 		
+		System.out.println("\n===========deleteById============");
+		categoriaDao.deleteById(4);
+		categoriaDao.findAll().stream().forEach(System.out::println);
 	}
 
 }

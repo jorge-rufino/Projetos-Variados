@@ -55,13 +55,44 @@ public class CategoriaDaoJDBC implements CategoriaDao{
 
 	@Override
 	public void update(Categoria obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		
+		try {
+		
+			st = connection.prepareStatement("UPDATE categoria SET nome = ? WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
+			st.setString(1, obj.getNome());
+			st.setInt(2, obj.getId());
+			
+			
+			int rowsAffect = st.executeUpdate();
+			
+			if (rowsAffect == 0) {
+				throw new DbException("Error update! Sem rows afetadas!");
+			}
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		
+		try {
+			
+			st = connection.prepareStatement("DELETE FROM categoria WHERE id = ?");
+			st.setInt(1, id);
+			
+			st.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new DbException("Exceção de Integridade: " + e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 

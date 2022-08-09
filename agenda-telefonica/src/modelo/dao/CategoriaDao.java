@@ -9,6 +9,5 @@ public interface CategoriaDao {
 	void update (Categoria obj);
 	void deleteById (Integer id);
 	Categoria findById (Integer id);
-//	List<Endereco> findByFields(String name, String email, Double salary, String depName);	
 	List<Categoria> findAll();
 }

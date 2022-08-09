@@ -9,6 +9,5 @@ public interface EnderecoDao {
 	void update (Endereco obj);
 	void deleteById (Integer id);
 	Endereco findById (Integer id);
-//	List<Endereco> findByFields(String name, String email, Double salary, String depName);	
 	List<Endereco> findAll();
 }
