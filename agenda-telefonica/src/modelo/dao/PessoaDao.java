@@ -5,6 +5,7 @@ import java.util.List;
 import model.entities.Categoria;
 import model.entities.Endereco;
 import model.entities.Pessoa;
+import model.entities.Telefone;
 
 public interface PessoaDao {
 	void insert (Pessoa obj);
@@ -14,4 +15,5 @@ public interface PessoaDao {
 	List<Pessoa> findAll();
 	List<Pessoa> findByEndereco(Endereco endereco);
 	List<Pessoa> findByCategoria(Categoria categoria);
+	List<Pessoa> findByTelefone(Telefone telefone);
 }
