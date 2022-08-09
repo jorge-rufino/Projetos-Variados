@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,33 @@ public class CategoriaDaoJDBC implements CategoriaDao{
 
 	@Override
 	public void insert(Categoria obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		
+		try {
+			
+			st = connection.prepareStatement("INSERT INTO categoria (nome) VALUES (?);", Statement.RETURN_GENERATED_KEYS);
+			st.setString(1, obj.getNome());
+			
+			int rowsAffect = st.executeUpdate();
+			
+			if(rowsAffect > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				if (rs.next()) {
+					int id = rs.getInt(1);
+					obj.setId(id);
+				}
+				DB.closeResultSet(rs);
+				
+			}else {
+				throw new DbException("Erro inesperado! Sem rows afetadas.");
+			}
+			
+			
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
@@ -49,13 +76,11 @@ public class CategoriaDaoJDBC implements CategoriaDao{
 			
 			rs = st.executeQuery();
 			
-			Categoria obj = new Categoria();
-			
 			if(rs.next()) {
-				instanciaCategoria(rs);
+				return instanciaCategoria(rs);
 			}
 			
-			return obj;
+			return null;
 		} catch (Exception e) {
 			throw new DbException(e.getMessage());
 		}finally {

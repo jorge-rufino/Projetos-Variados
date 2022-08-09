@@ -1,7 +1,7 @@
 CREATE TABLE categoria (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(30)    
-)
+);
 
 CREATE TABLE endereco (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -9,7 +9,7 @@ CREATE TABLE endereco (
     bairro VARCHAR(50) ,
     complemento VARCHAR(50) ,
     cidade VARCHAR(50)    
-)
+);
 
 CREATE TABLE pessoa (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -24,7 +24,7 @@ CREATE TABLE pessoa (
     
     FOREIGN KEY fk_pessoa_categoria (idCategoria) REFERENCES categoria(id) ON UPDATE NO ACTION ON DELETE NO ACTION,
     FOREIGN KEY fk_pessoa_endereco  (idEndereco) REFERENCES endereco(id) ON UPDATE NO ACTION ON DELETE NO ACTION
-)
+);
 
 CREATE TABLE telefone (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -34,7 +34,7 @@ CREATE TABLE telefone (
     idPessoa INT NOT NULL,   
        
     FOREIGN KEY fk_telefone_pessoa (idPessoa) REFERENCES pessoa(id) ON UPDATE NO ACTION ON DELETE NO ACTION 
-)
+);
 
 # Populando Categoria
 INSERT INTO `agenda`.`categoria` (`id`, `nome`) VALUES ('1', 'Amigos');
@@ -42,9 +42,9 @@ INSERT INTO `agenda`.`categoria` (`id`, `nome`) VALUES ('2', 'Familia');
 INSERT INTO `agenda`.`categoria` (`id`, `nome`) VALUES ('3', 'Trabalho');
 
 # Populando Endereco
-INSERT INTO `agenda`.`endereco` (`id`, `rua`, `bairo`, `complemento`, `cidade`) VALUES ('1', 'Av Joao Fanjas', 'Centro', 'Fundos', 'Benevides');
-INSERT INTO `agenda`.`endereco` (`id`, `rua`, `bairo`, `cidade`) VALUES ('2', 'Rua Joaquim Pereira de Queiroz', 'Maguari', 'Benevides');
-INSERT INTO `agenda`.`endereco` (`id`, `rua`, `bairo`, `complemento`, `cidade`) VALUES ('3', 'Av Almirante Barroso', 'Entroncamento', 'prox ao elevado', 'Belem');
+INSERT INTO `agenda`.`endereco` (`id`, `rua`, `bairro`, `complemento`, `cidade`) VALUES ('1', 'Av Joao Fanjas', 'Centro', 'Fundos', 'Benevides');
+INSERT INTO `agenda`.`endereco` (`id`, `rua`, `bairro`, `cidade`) VALUES ('2', 'Rua Joaquim Pereira de Queiroz', 'Maguari', 'Benevides');
+INSERT INTO `agenda`.`endereco` (`id`, `rua`, `bairro`, `complemento`, `cidade`) VALUES ('3', 'Av Almirante Barroso', 'Entroncamento', 'prox ao elevado', 'Belem');
 
 # Populando Pessoa
 INSERT INTO `agenda`.`pessoa` (`id`, `nome`, `apelido`, `sexo`, `email`, `data_cadastro`, `idCategoria`, `idEndereco`) VALUES ('1', 'Angela Rufino', 'mãe', 'f', 'angela@gmail.com', '2022-08-08 08:00:00', '2', '1');
