@@ -49,7 +49,7 @@ public class PessoaDaoJDBC implements PessoaDao {
 	public Pessoa findById(Integer id) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
-
+		System.out.println("finById");
 		try {
 
 			st = connection.prepareStatement("SELECT P.*, T.id as idTelefone, T.idPessoa " 
@@ -157,19 +157,15 @@ public class PessoaDaoJDBC implements PessoaDao {
 		obj.setData_cadastro(rs.getDate("data_cadastro"));
 		obj.setCategoria(cat);
 		obj.setEndereco(end);
-
-		List<Telefone> listTelefone = new ArrayList<>();
-		listTelefone = DaoFactory.createTelefoneDao().findByPessoa(obj);
 		
-		listTelefone.stream().forEach(System.out::println);
+		//Busca todos os telefones dessa Pessoa
+		List<Telefone> listTelefone = DaoFactory.createTelefoneDao().findByPessoa(obj);
 		
-		
-//		for (Telefone telefone : listTelefone) {
-//			if (telefone != null) {
-//				obj.addTelefone(telefone);
-//			}
-//		}
-
+		//Se a Pessoa tiver Telefones, adiciona cada uma em Pessoa
+		if (listTelefone.size() > 0) {
+			listTelefone.stream().forEach(telefone -> obj.addTelefone(telefone));
+		}
+				
 		return obj;
 	}
 

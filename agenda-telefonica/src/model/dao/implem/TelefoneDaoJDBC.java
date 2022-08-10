@@ -5,12 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
 import model.entities.Pessoa;
 import model.entities.Telefone;
+import modelo.dao.DaoFactory;
 import modelo.dao.TelefoneDao;
 
 public class TelefoneDaoJDBC implements TelefoneDao {
@@ -52,9 +55,9 @@ public class TelefoneDaoJDBC implements TelefoneDao {
 
 			rs = st.executeQuery();
 
-//			if (rs.next()) {
-//				return instanciaTelefone(rs);
-//			}
+			if (rs.next()) {
+				return instanciaTelefone(rs, DaoFactory.createPessoaDao().findById(rs.getInt("idPessoa")));
+			}
 
 			return null;
 
@@ -79,9 +82,19 @@ public class TelefoneDaoJDBC implements TelefoneDao {
 
 			List<Telefone> list = new ArrayList<>();
 
-//			while (rs.next()) {
-//				list.add(instanciaTelefone(rs));
-//			}
+			Map<Integer, Pessoa> mapPessoa = new HashMap<>();
+			
+			while (rs.next()) {
+				
+				Pessoa pessoa = mapPessoa.get(rs.getInt("idPessoa"));
+				
+				if(pessoa == null) {
+					pessoa = DaoFactory.createPessoaDao().findById(rs.getInt("idPessoa"));
+					mapPessoa.put(rs.getInt("idPessoa"), pessoa);
+				}
+				
+				list.add(instanciaTelefone(rs,pessoa));
+			}
 
 			return list;
 
@@ -100,17 +113,20 @@ public class TelefoneDaoJDBC implements TelefoneDao {
 
 		try {
 
-			st = connection.prepareStatement("SELECT * from Telefone WHERE idPessoa = ?");
+			st = connection.prepareStatement("SELECT T.*, P.nome, P.apelido, P.cpf, P.sexo, "
+					+ "P.email, P.data_cadastro, P.idCategoria, P.idEndereco "
+					+ "FROM telefone T "
+					+ "INNER JOIN pessoa P on T.idPessoa = P.id WHERE idPessoa = ?");
 			st.setInt(1, pessoa.getId());
 
 			rs = st.executeQuery();
-
+			
 			List<Telefone> list = new ArrayList<>();
-
-			while (rs.next()) {
-				list.add(instanciaTelefone(rs,pessoa));
+			
+			while (rs.next()) {				
+				list.add(instanciaTelefone(rs,instanciaPessoa(rs)));
 			}
-
+			
 			return list;
 
 		} catch (SQLException e) {
@@ -126,10 +142,24 @@ public class TelefoneDaoJDBC implements TelefoneDao {
 		obj.setId(rs.getInt("id"));
 		obj.setDdd(rs.getString("ddd"));
 		obj.setNumero(rs.getString("numero"));
-		obj.setTipo(rs.getString("tipo"));
-		obj.setIdPessoa(pessoa.getId());
+		obj.setTipo(rs.getString("tipo"));		
+		obj.setPessoa(pessoa);
 		
 		return obj;
 	}
-
+	
+	private Pessoa instanciaPessoa(ResultSet rs) throws SQLException {
+		Pessoa obj = new Pessoa();
+		obj.setId(rs.getInt("idPessoa"));
+		obj.setNome(rs.getString("nome"));
+		obj.setApelido(rs.getString("apelido"));
+		obj.setEmail(rs.getString("email"));
+		obj.setCpf(rs.getString("cpf"));
+		obj.setSexo(rs.getString("sexo"));
+		obj.setData_cadastro(rs.getDate("data_cadastro"));
+		obj.setCategoria(DaoFactory.createCategoriaDAO().findById(rs.getInt("idCategoria")));
+		obj.setEndereco(DaoFactory.createEnderecoDAO().findById(rs.getInt("idEndereco")));
+		
+		return obj;
+	}
 }

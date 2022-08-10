@@ -10,16 +10,16 @@ public class Telefone implements Serializable{
 	private String numero;
 	private String tipo;
 	
-	private Integer idPessoa;
+	private Pessoa pessoa;
 
 	public Telefone () {}
 	
-	public Telefone(Integer id, String ddd, String numero, String tipo, Integer idPessoa) {	
+	public Telefone(Integer id, String ddd, String numero, String tipo, Pessoa pessoa) {	
 		this.id = id;
 		this.ddd = ddd;
 		this.numero = numero;
 		this.tipo = tipo;
-		this.idPessoa = idPessoa;
+		this.pessoa = pessoa;
 	}
 
 	public Integer getId() {
@@ -54,18 +54,17 @@ public class Telefone implements Serializable{
 		this.tipo = tipo;
 	}
 
-	public Integer getIdPessoa() {
-		return idPessoa;
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setIdPessoa(Integer idPessoa) {
-		this.idPessoa = idPessoa;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
 	@Override
 	public String toString() {
-		return "Telefone [id=" + id + ", ddd=" + ddd + ", numero=" + numero + ", tipo=" + tipo + ", idPessoa=" + idPessoa
-				+ "]";
+		return "Telefone [id=" + id + ", ddd=" + ddd + ", numero=" + numero + ", tipo=" + tipo + ", pessoa=" + pessoa.getNome() +"]";
 	}
 	
 }
