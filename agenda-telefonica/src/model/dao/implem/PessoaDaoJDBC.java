@@ -49,7 +49,7 @@ public class PessoaDaoJDBC implements PessoaDao {
 	public Pessoa findById(Integer id) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
-		System.out.println("finById");
+		
 		try {
 
 			st = connection.prepareStatement("SELECT P.*, T.id as idTelefone, T.idPessoa " 

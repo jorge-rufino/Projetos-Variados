@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,14 +28,61 @@ public class TelefoneDaoJDBC implements TelefoneDao {
 
 	@Override
 	public void insert(Telefone obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		
+		try {
+			
+			st = connection.prepareStatement("INSERT INTO telefone (ddd, numero, tipo, idPessoa) VALUES (?, ?, ?, ?);",
+					Statement.RETURN_GENERATED_KEYS);
+			
+			st.setString(1, obj.getDdd());
+			st.setString(2, obj.getNumero());
+			st.setString(3, obj.getTipo());
+			st.setInt(4, obj.getPessoa().getId());
+			
+			int rowsAffect = st.executeUpdate();
+			
+			if(rowsAffect > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				if(rs.next()) {
+					int id = rs.getInt(1);
+					obj.setId(id);
+				}
+				DB.closeResultSet(rs);
+			}
+			else {
+				throw new DbException("Error ao inserir novo telefone!");
+			}
+			
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
 
 	}
 
 	@Override
 	public void update(Telefone obj) {
-		// TODO Auto-generated method stub
-
+		
+		PreparedStatement st = null;
+		try {
+			
+			st = connection.prepareStatement("UPDATE telefone SET ddd = ?, numero = ?, tipo = ?, idPessoa = ? WHERE id = ?;");
+			st.setString(1, obj.getDdd());
+			st.setString(2, obj.getNumero());
+			st.setString(3, obj.getTipo());
+			st.setInt(4, obj.getPessoa().getId());
+			st.setInt(5, obj.getId());
+			
+			st.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			
+		}
+	
 	}
 
 	@Override
@@ -50,13 +98,18 @@ public class TelefoneDaoJDBC implements TelefoneDao {
 
 		try {
 
-			st = connection.prepareStatement("SELECT * from Telefone WHERE id = ?");
+			st = connection.prepareStatement("SELECT T.*, P.nome, P.apelido, P.cpf, P.sexo, "
+					+ "P.email, P.data_cadastro, P.idCategoria, P.idEndereco "
+					+ "FROM telefone T "
+					+ "INNER JOIN pessoa P on T.idPessoa = P.id "
+					+ "WHERE T.id = ? "
+					+ "ORDER BY P.nome");
 			st.setInt(1, id);
 
 			rs = st.executeQuery();
 
 			if (rs.next()) {
-				return instanciaTelefone(rs, DaoFactory.createPessoaDao().findById(rs.getInt("idPessoa")));
+				return instanciaTelefone(rs, instanciaPessoa(rs));
 			}
 
 			return null;
@@ -76,7 +129,11 @@ public class TelefoneDaoJDBC implements TelefoneDao {
 
 		try {
 
-			st = connection.prepareStatement("SELECT * from Telefone");
+			st = connection.prepareStatement("SELECT T.*, P.nome, P.apelido, P.cpf, P.sexo, "
+					+ "P.email, P.data_cadastro, P.idCategoria, P.idEndereco "
+					+ "FROM telefone T "
+					+ "INNER JOIN pessoa P on T.idPessoa = P.id "
+					+ "ORDER BY P.nome");
 
 			rs = st.executeQuery();
 
@@ -89,7 +146,7 @@ public class TelefoneDaoJDBC implements TelefoneDao {
 				Pessoa pessoa = mapPessoa.get(rs.getInt("idPessoa"));
 				
 				if(pessoa == null) {
-					pessoa = DaoFactory.createPessoaDao().findById(rs.getInt("idPessoa"));
+					pessoa = instanciaPessoa(rs);
 					mapPessoa.put(rs.getInt("idPessoa"), pessoa);
 				}
 				
@@ -123,8 +180,17 @@ public class TelefoneDaoJDBC implements TelefoneDao {
 			
 			List<Telefone> list = new ArrayList<>();
 			
+			Map<Integer, Pessoa> mapPessoa = new HashMap<>();
+			
 			while (rs.next()) {				
-				list.add(instanciaTelefone(rs,instanciaPessoa(rs)));
+				pessoa = mapPessoa.get(rs.getInt("idPessoa"));
+				
+				if(pessoa == null) {
+					pessoa = instanciaPessoa(rs);
+					mapPessoa.put(rs.getInt("idPessoa"), pessoa);
+				}
+				
+				list.add(instanciaTelefone(rs,pessoa));
 			}
 			
 			return list;
