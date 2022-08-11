@@ -64,7 +64,8 @@ public class Telefone implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Telefone [id=" + id + ", ddd=" + ddd + ", numero=" + numero + ", tipo=" + tipo + ", pessoa=" + pessoa.getNome() +"]";
+		return "Telefone [id=" + id + ", ddd=" + ddd + ", numero=" + numero + ", tipo=" + tipo + ", pessoa=" + pessoa.getNome() 
+		+", idPessoa=" + pessoa.getId() + "]";
 	}
 	
 }

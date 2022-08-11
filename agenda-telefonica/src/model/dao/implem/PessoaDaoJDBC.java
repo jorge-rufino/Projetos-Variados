@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,13 +30,65 @@ public class PessoaDaoJDBC implements PessoaDao {
 
 	@Override
 	public void insert(Pessoa obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		
+		try {
+			
+			st = connection.prepareStatement("INSERT INTO pessoa (nome, apelido, sexo, email, data_cadastro, idCategoria, idEndereco) "
+					+ "VALUES (?,?,?,?,?,?,?);", Statement.RETURN_GENERATED_KEYS);
+			st.setString(1, obj.getNome());
+			st.setString(2, obj.getApelido());
+			st.setString(3, obj.getSexo());
+			st.setString(4, obj.getEmail());
+			st.setDate(5, new java.sql.Date(obj.getData_cadastro().getTime()));
+			st.setInt(6, obj.getCategoria().getId());
+			st.setInt(7, obj.getEndereco().getId());
+			
+			int rowAffect = st.executeUpdate();
+			
+			if(rowAffect > 0 ) {
+				ResultSet rs = st.getGeneratedKeys();
+				if (rs.next()) {
+					int id = rs.getInt(1);
+					obj.setId(id);
+				}
+				DB.closeResultSet(rs);
+			}
+			else {
+				throw new DbException("Erro ao cadastrar nova pessoa no banco!");
+			}
+			
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
 
 	}
 
 	@Override
 	public void update(Pessoa obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		
+		try {
+			
+			st = connection.prepareStatement("UPDATE pessoa set nome=?, apelido=?, sexo=?, email=?, data_cadastro=?, "
+					+ "idCategoria=?, idEndereco=? WHERE id = ?;");
+			st.setString(1, obj.getNome());
+			st.setString(2, obj.getApelido());
+			st.setString(3, obj.getSexo());
+			st.setString(4, obj.getEmail());
+			st.setDate(5, new java.sql.Date(obj.getData_cadastro().getTime()));
+			st.setInt(6, obj.getCategoria().getId());
+			st.setInt(7, obj.getEndereco().getId());
+			
+			st.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
 
 	}
 
@@ -52,12 +105,7 @@ public class PessoaDaoJDBC implements PessoaDao {
 		
 		try {
 
-			st = connection.prepareStatement("SELECT P.*, T.id as idTelefone, T.idPessoa " 
-					+ "FROM pessoa P "
-					+ "INNER JOIN telefone T " 
-					+ "ON P.id = T.idPessoa " 
-					+ "WHERE P.id = ? "
-					+ "GROUP BY T.idPessoa");
+			st = connection.prepareStatement("SELECT * from Pessoa WHERE id = ? ");
 			st.setInt(1, id);
 			rs = st.executeQuery();
 
@@ -86,11 +134,9 @@ public class PessoaDaoJDBC implements PessoaDao {
 
 		try {
 
-			st = connection.prepareStatement("SELECT P.*, T.id as idTelefone, T.idPessoa " 
-					+ "FROM pessoa P "
-					+ "INNER JOIN telefone T " 
-					+ "ON P.id = T.idPessoa " 
-					+ "GROUP BY T.idPessoa;");
+			st = connection.prepareStatement("SELECT * from Pessoa"); 
+					
+					
 			rs = st.executeQuery();
 
 			List<Pessoa> list = new ArrayList<>();
@@ -161,7 +207,7 @@ public class PessoaDaoJDBC implements PessoaDao {
 		//Busca todos os telefones dessa Pessoa
 		List<Telefone> listTelefone = DaoFactory.createTelefoneDao().findByPessoa(obj);
 		
-		//Se a Pessoa tiver Telefones, adiciona cada uma em Pessoa
+		//Se a Pessoa tiver Telefones, adiciona cada um em Pessoa
 		if (listTelefone.size() > 0) {
 			listTelefone.stream().forEach(telefone -> obj.addTelefone(telefone));
 		}
