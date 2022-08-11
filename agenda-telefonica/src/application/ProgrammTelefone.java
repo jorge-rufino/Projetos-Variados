@@ -33,6 +33,10 @@ public class ProgrammTelefone {
 		telefone.setPessoa(DaoFactory.createPessoaDao().findById(3));
 		telefoneDao.update(telefone);
 		System.out.println(telefoneDao.findById(5));
+		
+		System.out.println("\n===========deleteById============");
+		telefoneDao.deleteById(2);
+		telefoneDao.findAll().stream().forEach(System.out::println);
 	}
 
 }

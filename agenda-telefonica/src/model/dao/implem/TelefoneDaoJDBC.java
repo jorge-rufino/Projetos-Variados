@@ -78,16 +78,33 @@ public class TelefoneDaoJDBC implements TelefoneDao {
 			st.executeUpdate();
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			throw new DbException(e.getMessage());
 		}finally {
-			
+			DB.closeStatement(st);
 		}
 	
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		
+		try {
+			
+			st = connection.prepareStatement("DELETE from Telefone WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
+			st.setInt(1, id);
+			
+			int rowAffect = st.executeUpdate();
+			
+			if(rowAffect == 0) {
+				throw new DbException("Objeto a ser deletado não existe");
+			}
+			
+		} catch (SQLException e) {
+			throw new DbException("Erro de integridade no banco: " + e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
 
 	}
 
