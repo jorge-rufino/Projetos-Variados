@@ -187,6 +187,10 @@ public class TelefoneDaoJDBC implements TelefoneDao {
 
 		try {
 
+			if (pessoa == null) {
+				throw new DbException("Pessoa não existe!");
+			}
+			
 			st = connection.prepareStatement("SELECT T.*, P.nome, P.apelido, P.cpf, P.sexo, "
 					+ "P.email, P.data_cadastro, P.idCategoria, P.idEndereco "
 					+ "FROM telefone T "

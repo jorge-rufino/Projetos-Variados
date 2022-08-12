@@ -1,5 +1,7 @@
 package application;
 
+import java.util.Date;
+
 import model.entities.Pessoa;
 import modelo.dao.DaoFactory;
 import modelo.dao.PessoaDao;
@@ -24,9 +26,15 @@ public class ProgrammPessoa {
 //		
 //		pessoaDao.insert(novaPessoa);
 //		System.out.println(novaPessoa);
-		
+//		
 		System.out.println("\n===========update============");
-		Pessoa pessoa = pessoaDao.findById(2);
-		pessoa.setApelido("");
+		Pessoa pessoa = pessoaDao.findAll().get(pessoaDao.findAll().size() - 1);	//Pega a ultima pessoa da tabela
+		pessoa.setApelido("teste"+new Date().getMinutes());
+		pessoaDao.update(pessoa);
+		System.out.println(pessoaDao.findById(pessoa.getId()));
+		
+		System.out.println("\n===========delete============");
+		pessoaDao.deleteById(pessoa.getId());
+		System.out.println("delete success");
 	}
 }

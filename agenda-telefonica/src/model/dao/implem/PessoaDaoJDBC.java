@@ -81,6 +81,7 @@ public class PessoaDaoJDBC implements PessoaDao {
 			st.setDate(5, new java.sql.Date(obj.getData_cadastro().getTime()));
 			st.setInt(6, obj.getCategoria().getId());
 			st.setInt(7, obj.getEndereco().getId());
+			st.setInt(8, obj.getId());
 			
 			st.executeUpdate();
 			
@@ -94,7 +95,50 @@ public class PessoaDaoJDBC implements PessoaDao {
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		 try {
+			
+			 st = connection.prepareStatement("DELETE from Pessoa WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
+			 st.setInt(1, id);
+			 
+			 //Define que o commit não será executado automaticamente
+			 connection.setAutoCommit(false);
+			 
+			 Pessoa pessoa = findById(id);
+			 
+			 if(pessoa == null) {
+				 throw new DbException("Id não existe!");
+			 }
+			 
+			 List<Telefone> telefones = DaoFactory.createTelefoneDao().findByPessoa(pessoa);
+			
+			 if (telefones.size() > 0) {
+				 for (Telefone telefone : telefones) {
+					 DaoFactory.createTelefoneDao().deleteById(telefone.getId());
+				}
+			 }
+			 
+			int rowAffect =st.executeUpdate();
+			 
+			 if (rowAffect == 0) {
+				 throw new DbException("Id a ser deletado não existe!");
+			 }
+			 
+			 //Faz o commit no banco somente se todas as operações tiverem sucesso
+			 connection.commit();
+			 
+			 //Se capturar alguam excecao, faz o rollback
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+				throw new DbException("Transaction rolled back! Caused by: " + e.getMessage());
+			} 
+			catch (SQLException e1) {
+				throw new DbException("Error trying to rollback! Caused by: " + e1.getMessage());
+			}
+		}finally {
+			DB.closeStatement(st);
+		}
 
 	}
 
@@ -216,3 +260,4 @@ public class PessoaDaoJDBC implements PessoaDao {
 	}
 
 }
+
