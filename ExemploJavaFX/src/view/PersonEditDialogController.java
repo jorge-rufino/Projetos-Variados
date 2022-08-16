@@ -46,6 +46,7 @@ public class PersonEditDialogController {
      */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
+        dialogStage.setResizable(false); // Nao pode redimensionar a janela
     }
 
     /**
@@ -62,7 +63,7 @@ public class PersonEditDialogController {
         postalCodeField.setText(Integer.toString(person.getPostalCode()));
         cityField.setText(person.getCity());
         birthdayField.setText(DateUtil.format(person.getBirthday()));
-        birthdayField.setPromptText("dd.mm.yyyy");
+        birthdayField.setPromptText("dd/mm/yyyy");
     }
 
     /**
@@ -137,7 +138,7 @@ public class PersonEditDialogController {
             errorMessage += "Aniversário inválido!\n";
         } else {
             if (!DateUtil.validDate(birthdayField.getText())) {
-                errorMessage += "Aniversário inválido. Use o formato dd.mm.yyyy!\n";
+                errorMessage += "Aniversário inválido. Use o formato dd/mm/yyyy!\n";
             }
         }
 

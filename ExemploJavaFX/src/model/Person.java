@@ -2,6 +2,10 @@ package model;
 
 import java.time.LocalDate;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -9,6 +13,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+
+@XmlRootElement(name = "person")
+@XmlAccessorType (XmlAccessType.FIELD)
 public class Person {
 
 	private final StringProperty firstName;
@@ -21,6 +28,7 @@ public class Person {
 	/**
 	 *  Construtor padrão.
 	 */
+	
 	public Person() {
 		this(null, null,null, null,null);
 	}
