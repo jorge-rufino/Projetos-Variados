@@ -32,7 +32,7 @@ public class Main extends Application {
 			mainStage.setTitle("Agenda Telefonica - By Rufino");
 			mainStage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/imagens/agenda.png")));
 			
-			//showContatoView();
+			showContatoView();
 			
 			mainStage.show();
 			
@@ -63,10 +63,10 @@ public class Main extends Application {
             // Carrega o person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("/view/ContatoView.fxml"));
-            AnchorPane personOverview = (AnchorPane) loader.load();
+            AnchorPane contatoOverview = (AnchorPane) loader.load();
             
             // Define o Contato overview dentro do mainLayout.
-            borderPane.setCenter(personOverview);
+            borderPane.setCenter(contatoOverview);
         } catch (IOException e) {
             e.printStackTrace();
         }
