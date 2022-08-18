@@ -1,17 +1,22 @@
 package view;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import application.Main;
 import db.DbException;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -20,16 +25,19 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.entities.Categoria;
 import model.entities.Pessoa;
 import model.entities.Telefone;
-import modelo.dao.DaoFactory;
-import modelo.dao.PessoaDao;
+import services.PessoaService;
 import util.Alerts;
+import util.Utils;
 
 public class ContatoController implements Initializable{
 	
-	PessoaDao pessoaDao = DaoFactory.createPessoaDao();
+	PessoaService pessoaService;
 	
 	@FXML
 	private TableView<Pessoa> tableViewPessoa;
@@ -59,8 +67,14 @@ public class ContatoController implements Initializable{
 	
 	@FXML
 	private Button btDelete;
+	@FXML
+	private Button btNovo;
 	
 	private ObservableList<Pessoa> obsPessoaList;	
+	
+	public void setPessoaService(PessoaService pessoaService) {
+		this.pessoaService = pessoaService;
+	}
 	
 	@Override	
 	public void initialize(URL url, ResourceBundle rb) {
@@ -76,7 +90,7 @@ public class ContatoController implements Initializable{
 	}
 	
 	public void updateTable() {
-		List<Pessoa> listaPessoas = pessoaDao.findAll();
+		List<Pessoa> listaPessoas = pessoaService.findAll();
 		listaPessoas.sort(Comparator.comparing(Pessoa::getNome));
 		obsPessoaList = FXCollections.observableArrayList(listaPessoas);
 		tableViewPessoa.setItems(obsPessoaList);
@@ -160,11 +174,11 @@ public class ContatoController implements Initializable{
 			Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delele " + pessoa.getNome() +" ?");
 			
 			if(result.get() == ButtonType.OK) {
-				if (pessoaDao == null) {
+				if (pessoaService == null) {
 					throw new IllegalStateException("Service was null");
 				}
 				try {
-					pessoaDao.deleteById(pessoa.getId());
+					pessoaService.deleteById(pessoa.getId());
 					updateTable();
 				}
 				catch (DbException e) {
@@ -175,6 +189,31 @@ public class ContatoController implements Initializable{
 			
 	    } else {
 			Alerts.showAlert("Mensagem Error", "Erro ao deletar contato", "Selecione um contato na lista.", AlertType.ERROR);
+		}
+	}
+	
+	public void onBtNovo(ActionEvent event) {
+		createContatoDialog(new Pessoa(), "/view/ContatoDialogView.fxml", Utils.currentStage(event));
+	}
+	
+	private void createContatoDialog(Pessoa pessoa, String absoluteName, Stage parentStage) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main.class.getResource(absoluteName));
+			AnchorPane anchorPaneDialog = loader.load();
+			
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Entre com os dados do contato:");
+			dialogStage.setScene(new Scene(anchorPaneDialog));
+			dialogStage.setResizable(false); // Nao pode redimensionar a janela
+			dialogStage.initOwner(parentStage); // Informa quem é o "PAI" dessa janela
+			dialogStage.initModality(Modality.WINDOW_MODAL);// Janela será Modal, ou seja, enquanto nao fechar ela, não
+															// acessa outra janela
+			dialogStage.setWidth(parentStage.getWidth()); // Seta o tamanho maximo igual ao tamanho da janela Pai
+			dialogStage.showAndWait();
+		}
+		catch (IOException e) {
+			Alerts.showAlert("IO Excpetion", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}
 }
