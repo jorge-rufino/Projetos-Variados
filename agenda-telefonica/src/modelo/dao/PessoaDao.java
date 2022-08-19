@@ -16,4 +16,5 @@ public interface PessoaDao {
 	List<Pessoa> findByEndereco(Endereco endereco);
 	List<Pessoa> findByCategoria(Categoria categoria);
 	List<Pessoa> findByTelefone(Telefone telefone);
+	void salvaPessoaEnderecoTelefone(Pessoa pessoa, Telefone telefone);
 }

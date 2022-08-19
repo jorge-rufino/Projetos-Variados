@@ -23,7 +23,7 @@
             <Label text="Categoria" />
          </children>
       </VBox>
-      <VBox layoutX="97.0" layoutY="14.0" spacing="7.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="10.0">
+      <VBox layoutX="97.0" layoutY="14.0" prefHeight="313.0" prefWidth="361.0" spacing="7.0" AnchorPane.rightAnchor="147.0" AnchorPane.topAnchor="10.0">
          <children>
             <TextField fx:id="txtDDD" />
             <TextField fx:id="txtNumero" />
@@ -39,9 +39,14 @@
       </VBox>
       <HBox layoutX="403.0" layoutY="349.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">
          <children>
-            <Button fx:id="btnSalvar" mnemonicParsing="false" text="Salvar" />
+            <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#onBtnSalvar" text="Salvar" />
             <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#onBtnCancelar" text="Cancelar" />
          </children>
       </HBox>
+      <Label fx:id="labelErroDdd" layoutX="460.0" layoutY="14.0" text="Label" />
+      <Label fx:id="labelErroNumero" layoutX="460.0" layoutY="46.0" text="Label" />
+      <Label fx:id="labelErroTipo" layoutX="460.0" layoutY="78.0" text="Label" />
+      <Label fx:id="labelErroNome" layoutX="460.0" layoutY="111.0" text="Label" />
+      <Label fx:id="labelErroCategoria" layoutX="460.0" layoutY="303.0" text="Label" />
    </children>
 </AnchorPane>

@@ -9,6 +9,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import services.PessoaService;
+import view.ContatoController;
 
 
 public class Main extends Application {
@@ -64,6 +66,10 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("/view/ContatoView.fxml"));
             AnchorPane contatoOverview = (AnchorPane) loader.load();
+            
+            ContatoController controller = loader.getController();
+            controller.setPessoaService(new PessoaService());
+            controller.updateTable();
             
             // Define o Contato overview dentro do mainLayout.
             borderPane.setCenter(contatoOverview);

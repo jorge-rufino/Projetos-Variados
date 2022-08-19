@@ -13,6 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import services.PessoaService;
 import util.Alerts;
 
 public class MainController implements Initializable {
@@ -23,11 +24,14 @@ public class MainController implements Initializable {
 	@FXML
 	private MenuItem menuItemAbout;
 
-	public MainController() {
+	public MainController() {	
+		
 	}
 
 	public void onMenuItemAgenda() {
-		loadView("/view/ContatoView.fxml", x -> {
+		loadView("/view/ContatoView.fxml", (ContatoController controller ) -> {
+			controller.setPessoaService(new PessoaService());
+			controller.updateTable();			
 		});
 	}
 	
@@ -76,7 +80,7 @@ public class MainController implements Initializable {
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-
+		
 	}
 
 }

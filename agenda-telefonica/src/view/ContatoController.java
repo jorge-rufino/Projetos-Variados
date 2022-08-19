@@ -80,21 +80,6 @@ public class ContatoController implements Initializable{
 	public void initialize(URL url, ResourceBundle rb) {
 		tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 		
-		updateTable();
-		
-	    // Detecta mudanças de seleção e mostra os detalhes da pessoa quando houver mudança.
-	    tableViewPessoa.getSelectionModel().selectedItemProperty().addListener(
-	            (observable, oldValue, newValue) -> showPessoaDetails(newValue));
-		
-		
-	}
-	
-	public void updateTable() {
-		List<Pessoa> listaPessoas = pessoaService.findAll();
-		listaPessoas.sort(Comparator.comparing(Pessoa::getNome));
-		obsPessoaList = FXCollections.observableArrayList(listaPessoas);
-		tableViewPessoa.setItems(obsPessoaList);
-		
 		tableColumnTelefones.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnTelefones.setCellFactory(coluna -> {
 		    return new TableCell<Pessoa, Pessoa>(){
@@ -140,6 +125,18 @@ public class ContatoController implements Initializable{
 		        }
 		    };
 		 });
+		
+	    // Detecta mudanças de seleção e mostra os detalhes da pessoa quando houver mudança.
+	    tableViewPessoa.getSelectionModel().selectedItemProperty().addListener(
+	            (observable, oldValue, newValue) -> showPessoaDetails(newValue));
+	}
+	
+	public void updateTable() {		
+		List<Pessoa> listaPessoas = pessoaService.findAll();
+		listaPessoas.sort(Comparator.comparing(Pessoa::getNome));
+		System.out.println(listaPessoas);
+		obsPessoaList = FXCollections.observableArrayList(listaPessoas);
+		tableViewPessoa.setItems(obsPessoaList);
 	}
 	
 	public void showPessoaDetails(Pessoa pessoa) {
@@ -193,7 +190,8 @@ public class ContatoController implements Initializable{
 	}
 	
 	public void onBtNovo(ActionEvent event) {
-		createContatoDialog(new Pessoa(), "/view/ContatoDialogView.fxml", Utils.currentStage(event));
+		Pessoa pessoa = new Pessoa();
+		createContatoDialog(pessoa, "/view/ContatoDialogView.fxml", Utils.currentStage(event));
 	}
 	
 	private void createContatoDialog(Pessoa pessoa, String absoluteName, Stage parentStage) {
@@ -202,6 +200,10 @@ public class ContatoController implements Initializable{
 			loader.setLocation(Main.class.getResource(absoluteName));
 			AnchorPane anchorPaneDialog = loader.load();
 			
+			ContatoDialogController controller = loader.getController();
+			controller.setPessoa(pessoa);
+			controller.setPessoaService(new PessoaService());
+			
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Entre com os dados do contato:");
 			dialogStage.setScene(new Scene(anchorPaneDialog));
@@ -209,7 +211,6 @@ public class ContatoController implements Initializable{
 			dialogStage.initOwner(parentStage); // Informa quem é o "PAI" dessa janela
 			dialogStage.initModality(Modality.WINDOW_MODAL);// Janela será Modal, ou seja, enquanto nao fechar ela, não
 															// acessa outra janela
-			dialogStage.setWidth(parentStage.getWidth()); // Seta o tamanho maximo igual ao tamanho da janela Pai
 			dialogStage.showAndWait();
 		}
 		catch (IOException e) {

@@ -208,7 +208,7 @@ public class PessoaDaoJDBC implements PessoaDao {
 				Pessoa pessoa = instanciaPessoa(rs, endereco, categoria);
 				list.add(pessoa);
 			}
-
+						
 			return list;
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
@@ -259,5 +259,33 @@ public class PessoaDaoJDBC implements PessoaDao {
 		return obj;
 	}
 
+	@Override
+	public void salvaPessoaEnderecoTelefone(Pessoa pessoa, Telefone telefone) {
+		try {
+			
+			connection.setAutoCommit(false);
+			
+			if (pessoa.getEndereco() != null) {
+				DaoFactory.createEnderecoDAO().insert(pessoa.getEndereco());
+			}
+			
+			insert(pessoa);
+			
+			telefone.setPessoa(pessoa);
+			
+			DaoFactory.createTelefoneDao().insert(telefone);
+			
+			connection.commit();
+			
+		}catch (SQLException e) {
+			try {
+				connection.rollback();
+				throw new DbException("Transaction rolled back! Caused by: " + e.getMessage());
+			} 
+			catch (SQLException e1) {
+				throw new DbException("Error trying to rollback! Caused by: " + e1.getMessage());
+			}
+		} 		
+	}
 }
 
