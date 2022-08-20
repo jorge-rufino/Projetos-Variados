@@ -2,6 +2,7 @@ package gui;
 
 import java.net.URL;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -37,9 +38,14 @@ public class SellerController implements Initializable, DataChangeListener {
 
 	@FXML
 	private TableColumn<Seller, Integer> tableColumnId;
-
 	@FXML
 	private TableColumn<Seller, String> tableColumnName;
+	@FXML
+	private TableColumn<Seller, String> tableColumnEmail;
+	@FXML
+	private TableColumn<Seller, Date> tableColumnBithDate;
+	@FXML
+	private TableColumn<Seller, Double> tableColumnSalary;
 
 	@FXML
 	TableColumn<Seller, Seller> tableColumnEDIT;
@@ -72,7 +78,15 @@ public class SellerController implements Initializable, DataChangeListener {
 	private void initializeNodes() {
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
-
+		tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+		
+		tableColumnBithDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+		Utils.formatTableColumnDate(tableColumnBithDate, "dd/MM/yyyy");
+		
+		tableColumnSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
+		//Segundo parametro é o numero de casas decimais
+		Utils.formatTableColumnDouble(tableColumnSalary, 2);
+		
 		// Pega o Scene principal e faz downcasting para pegar a superclasse que no caso
 		// é o nosso Stage definido na Main.class (primaryStage)
 		Stage stage = (Stage) Main.getMainScene().getWindow();
