@@ -30,7 +30,7 @@ public class Constraints {
 	//Permite apenas Numeros e os sinas das Operações
 	public static void setTextFieldNumbersOperations(TextField txt) {
 		txt.textProperty().addListener((obs, oldValue, newValue) -> {			
-			if (newValue != null && !newValue.matches("(\\d*([\\.+-/*]\\d*)?)*")) {				
+			if (newValue != null && !newValue.matches("(\\d*([\\.+-/*)(^]\\d*)?)*")) {				
 				txt.setText(oldValue);
 			}
 		});

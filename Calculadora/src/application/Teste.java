@@ -3,97 +3,122 @@ package application;
 import java.util.Stack;
 
 public class Teste {
-	public int evaluate(String exp) {
-		Stack<Integer> operands = new Stack<>(); // Operand stack
-		Stack<Character> operations = new Stack<>(); // Operator stack
-		for (int i = 0; i < exp.length(); i++) {
-			char c = exp.charAt(i);
-			if (Character.isDigit(c)) // check if it is number
-			{
-				// Entry is Digit, and it could be greater than a one-digit number
-				int num = 0;
-				while (Character.isDigit(c)) {
-					num = num * 10 + (c - '0');
-					i++;
-					if (i < exp.length()) {
-						c = exp.charAt(i);
-					} else {
-						break;
-					}
-				}
-				i--;
-				operands.push(num);
-			} else if (c == '(') {
-				operations.push(c); // push character to operators stack
-			}
-			// Closed brace, evaluate the entire brace
-			else if (c == ')') {
-				while (operations.peek() != '(') {
-					int output = performOperation(operands, operations);
-					operands.push(output); // push result back to stack
-				}
-				operations.pop();
-			}
 
-			// current character is operator
-			else if (isOperator(c)) {
-				while (!operations.isEmpty() && precedence(c) <= precedence(operations.peek())) {
-					int output = performOperation(operands, operations);
-					operands.push(output); // push result back to stack
-				}
-				operations.push(c); // push the current operator to stack
-			}
-		}
+    private static enum Operators {
+        SUM('+', 1),
+        SUB('-', 1),
+        MUL('*', 2),
+        DIV('/', 2),
+        POW('^', 3),
+        UNDF('?', -1);
 
-		while (!operations.isEmpty()) {
-			int output = performOperation(operands, operations);
-			operands.push(output); // push final result back to stack
-		}
-		return operands.pop();
-	}
+        private char simbol;
+        private int precedence;
 
-	static int precedence(char c) {
-		switch (c) {
-		case '+':
-		case '-':
-			return 1;
-		case '*':
-		case '/':
-			return 2;
-		case '^':
-			return 3;
-		}
-		return -1;
-	}
+        Operators(char simbol, int precedence) {
+            this.simbol = simbol;
+            this.precedence = precedence;
+        }
 
-	public int performOperation(Stack<Integer> operands, Stack<Character> operations) {
-		int a = operands.pop();
-		int b = operands.pop();
-		char operation = operations.pop();
-		switch (operation) {
-		case '+':
-			return a + b;
-		case '-':
-			return b - a;
-		case '*':
-			return a * b;
-		case '/':
-			if (a == 0) {
-				System.out.println("Cannot divide by zero");
-				return 0;
-			}
-			return b / a;
-		}
-		return 0;
-	}
+        public char getSimbol() {
+            return simbol;
+        }
 
-	public boolean isOperator(char c) {
-		return (c == '+' || c == '-' || c == '/' || c == '*' || c == '^');
-	}
+        public int getPrecedence() {
+            return precedence;
+        }
 
-	public static void main(String[] args) {
-		String infixExpression = "2+2*10-2/2+2";
-		Teste obj = new Teste();
-		System.out.println(obj.evaluate(infixExpression));
-	}
+        public boolean hasLowerPrecedenceThan(char simbol) {
+            Operators operator = Operators.getOperator(simbol);
+
+            return this.precedence <= operator.getPrecedence();
+        }
+
+        public static Operators getOperator(char simbol) {
+            return switch (simbol) {
+                case '+' -> Operators.SUM;
+                case '-' -> Operators.SUB;
+                case '*' -> Operators.MUL;
+                case '/' -> Operators.DIV;
+                case '^' -> Operators.POW;
+                default -> Operators.UNDF;
+            };
+        }
+
+        public static boolean isOperator(char simbol) {
+            return simbol == SUM.simbol ||
+                    simbol == SUB.simbol ||
+                    simbol == MUL.simbol ||
+                    simbol == DIV.simbol ||
+                    simbol == POW.simbol;
+        }
+
+        public static Double eval(char simbol, double leftOperand, double rightOperand) {
+            return switch (simbol) {
+                case '+' -> leftOperand + rightOperand;
+                case '-' -> rightOperand - leftOperand;
+                case '*' -> leftOperand * rightOperand;
+                case '/' -> rightOperand / leftOperand;
+                case '^' -> Math.pow(leftOperand, rightOperand);
+                default -> 0.0;
+            };
+        }
+    }
+
+    static class Expression {
+
+        public static Double evaluate(String expression) {
+            Stack<Double> operands = new Stack<>();
+            Stack<Character> operations = new Stack<>();
+
+            String[] tokens = expression.split("(?<=[-+*/()^])|(?=[-+*/()^])");
+
+            for (int i = 0; i < tokens.length; i++) {
+                String token = tokens[i];
+
+                if (Character.isDigit(token.charAt(0))) {
+                    Double number = Double.valueOf(token);
+                    operands.push(number);
+                } else if ("(".equals(token)) {
+                    operations.push(token.charAt(0));
+                } else if (")".equals(token)) {
+                    while (operations.peek() != '(') {
+                        Double output = performOperation(operands, operations);
+                        operands.push(output);
+                    }
+
+                    operations.pop();
+                } else if (Operators.isOperator(token.charAt(0))) {
+                    Operators operator = Operators.getOperator(token.charAt(0));
+
+                    while (!operations.isEmpty() && operator.hasLowerPrecedenceThan(operations.peek())) {
+                        Double output = performOperation(operands, operations);
+                        operands.push(output);
+                    }
+
+                    operations.push(operator.getSimbol());
+                }
+            }
+
+            while (!operations.isEmpty()) {
+                Double output = performOperation(operands, operations);
+                operands.push(output);
+            }
+
+            return operands.pop();
+        }
+
+        private static Double performOperation(Stack<Double> operands, Stack<Character> operations) {
+            double left = operands.pop();
+            double right = operands.pop();
+            char operation = operations.pop();
+
+            return Operators.eval(operation, left, right);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Expression.evaluate("10+"));
+//        System.out.println(Expression.evaluate("(15/3*4-7)+(19-4^2)") == 16);
+    }
 }

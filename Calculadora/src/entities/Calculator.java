@@ -3,36 +3,24 @@ package entities;
 import java.util.Stack;
 
 public class Calculator {
-	public double evaluate(String exp) {
+	public double evaluate(String expression) {
 		
 		Stack<Double> operands = new Stack<>(); // Operand stack
 		Stack<Character> operations = new Stack<>(); // Operator stack
-		for (int i = 0; i < exp.length(); i++) {
-			char c = exp.charAt(i);
-			
-			if (Character.isDigit(c)) // check if it is number
-			{	
-				// Entry is Digit, and it could be greater than a one-digit number
-				double num = 0;
-				while (Character.isDigit(c)) {
-					num = num * 10 + (c - '0');
-//					System.out.println("indice: "+i);
-					System.out.println("C - 0: "+ (c - '0'));
-					System.out.println("Num: " + num);
-					i++;
-					if (i < exp.length()) {
-						c = exp.charAt(i);
-					} else {
-						break;
-					}
-				}
-				i--;
-				operands.push(num);
-			} else if (c == '(') {
-				operations.push(c); // push character to operators stack
+		
+		String[] tokens = expression.split("(?<=[-+*/()^])|(?=[-+*/()^])");
+		
+		for (int i = 0; i < tokens.length; i++) {			
+            String token = tokens[i];
+            
+            if (Character.isDigit(token.charAt(0))) {
+                Double number = Double.valueOf(token);
+                operands.push(number);
+			} else if ("(".equals(token)) {
+				operations.push(token.charAt(0)); // push character to operators stack
 			}
 			// Closed brace, evaluate the entire brace
-			else if (c == ')') {
+			else if (")".equals(token)) {
 				while (operations.peek() != '(') {
 					double output = performOperation(operands, operations);
 					operands.push(output); // push result back to stack
@@ -41,12 +29,12 @@ public class Calculator {
 			}
 
 			// current character is operator
-			else if (isOperator(c)) {
-				while (!operations.isEmpty() && precedence(c) <= precedence(operations.peek())) {
+			else if (isOperator(token.charAt(0))) {
+				while (!operations.isEmpty() && precedence(token.charAt(0)) <= precedence(operations.peek())) {
 					double output = performOperation(operands, operations);
 					operands.push(output); // push result back to stack
 				}
-				operations.push(c); // push the current operator to stack
+				operations.push(token.charAt(0)); // push the current operator to stack
 			}
 		}
 
@@ -72,12 +60,10 @@ public class Calculator {
 		return -1;
 	}
 
-	public double performOperation(Stack<Double> operands, Stack<Character> operations) {
+	public double performOperation(Stack<Double> operands, Stack<Character> operations) {		
 		double a = operands.pop();
 		double b = operands.pop();		
 		char operation = operations.pop();
-		
-		System.out.println("A: " + a + "\nB: "+ b + "\nOperation: " + operation);
 		
 		switch (operation) {
 		case '+':
