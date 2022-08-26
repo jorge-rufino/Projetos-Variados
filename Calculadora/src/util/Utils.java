@@ -36,6 +36,8 @@ public class Utils {
 		}else {
 			txt.setText(strField + newOperation);
 		}
+		
+		Utils.gainFocus(txt);	
 	}
 	
 	//Remove ultimo charactere

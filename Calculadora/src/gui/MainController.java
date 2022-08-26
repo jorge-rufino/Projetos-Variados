@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import util.Constraints;
 import util.Utils;
@@ -72,28 +71,23 @@ public class MainController implements Initializable{
 	}
 	
 	public void onBtnSum() {
-		Utils.changeOperation(txtResult, "+");
-		Utils.gainFocus(txtResult);		
+		Utils.changeOperation(txtResult, "+");				
 	}
 	
 	public void onBtnSub() {
-		Utils.changeOperation(txtResult, "-");
-		Utils.gainFocus(txtResult);		
+		Utils.changeOperation(txtResult, "-");			
 	}
 	
 	public void onBtnMultiply() {
-		Utils.changeOperation(txtResult, "*");
-		Utils.gainFocus(txtResult);		
+		Utils.changeOperation(txtResult, "*");				
 	}
 	
 	public void onBtnDivide() {
-		Utils.changeOperation(txtResult, "/");
-		Utils.gainFocus(txtResult);		
+		Utils.changeOperation(txtResult, "/");				
 	}
 	
 	public void onBtnExpon() {
-		Utils.changeOperation(txtResult, "^");
-		Utils.gainFocus(txtResult);		
+		Utils.changeOperation(txtResult, "^");			
 	}
 	
 	public void onBtnDelete() {
@@ -111,14 +105,23 @@ public class MainController implements Initializable{
 
         @Override
         public void handle(KeyEvent event) {
-        	//Se aperta ESC apaga todo o display
-            if (event.getCode() == KeyCode.ESCAPE) {
-            	onBtnDeleteAll();
-            }
-            
-            if (event.getCode() == KeyCode.EQUALS || event.getCode() == KeyCode.ENTER) {
-            	onBtn0Result();
-            }
+//        	Se aperta ESC apaga todo o display
+//          if (event.getCode() == KeyCode.ESCAPE) {
+//          	onBtnDeleteAll();
+//          }        	
+        	String operation = ""+ event.getCode();
+        	
+        	switch (operation) {
+				case "ESCAPE" 	 ->	onBtnDeleteAll();
+				case "EQUALS" 	 ->	onBtn0Result();
+				case "ENTER"  	 ->	onBtn0Result();
+				case "ADD"    	 ->	{Utils.changeOperation(txtResult, "+");}
+				case "SUBTRACT"  ->	{Utils.changeOperation(txtResult, "-");}
+				case "DIVIDE"    ->	{Utils.changeOperation(txtResult, "/");}
+				case "MULTIPLY"  ->	{Utils.changeOperation(txtResult, "*");}
+				
+				default -> operation = ""; 			
+			}
         }
     };
 	
