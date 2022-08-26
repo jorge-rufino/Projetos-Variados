@@ -19,8 +19,6 @@ public class Utils {
 			ultimaLetra = String.valueOf(str.trim().charAt(str.length() - 1));
 		}
 		
-		System.out.println(ultimaLetra);
-		
 		return ultimaLetra.matches("[^\\d]+");
 	}
 	//Se o ultimo character for um sinal de operação, alterar ele para um novo sinal de operaçao, ou somente adciona um 
@@ -38,5 +36,13 @@ public class Utils {
 		}else {
 			txt.setText(strField + newOperation);
 		}
+	}
+	
+	//Remove ultimo charactere
+	public static String removeLastCharactere(String str) {
+		return str = Optional.ofNullable(str)
+			    .filter(s -> s.length() != 0)
+			    .map(s -> s.substring(0, s.length() - 1))
+			    .orElse(str);
 	}
 }

@@ -2,48 +2,56 @@ package entities;
 
 import java.util.Stack;
 
+import util.Utils;
+
 public class Calculator {
-	public double evaluate(String expression) {
+	public Double evaluate(String expression) {
 		
-		Stack<Double> operands = new Stack<>(); // Operand stack
-		Stack<Character> operations = new Stack<>(); // Operator stack
-		
-		String[] tokens = expression.split("(?<=[-+*/()^])|(?=[-+*/()^])");
-		
-		for (int i = 0; i < tokens.length; i++) {			
-            String token = tokens[i];
-            
-            if (Character.isDigit(token.charAt(0))) {
-                Double number = Double.valueOf(token);
-                operands.push(number);
-			} else if ("(".equals(token)) {
-				operations.push(token.charAt(0)); // push character to operators stack
-			}
-			// Closed brace, evaluate the entire brace
-			else if (")".equals(token)) {
-				while (operations.peek() != '(') {
-					double output = performOperation(operands, operations);
-					operands.push(output); // push result back to stack
-				}
-				operations.pop();
-			}
+		if (!Utils.lastCharactereIsOperation(expression)){
+			
+			Stack<Double> operands = new Stack<>(); 		// Operand stack
+			Stack<Character> operations = new Stack<>(); 	// Operator stack
 
-			// current character is operator
-			else if (isOperator(token.charAt(0))) {
-				while (!operations.isEmpty() && precedence(token.charAt(0)) <= precedence(operations.peek())) {
-					double output = performOperation(operands, operations);
-					operands.push(output); // push result back to stack
+			String[] tokens = expression.split("(?<=[-+*/()^])|(?=[-+*/()^])");
+			
+			for (int i = 0; i < tokens.length; i++) {			
+	            String token = tokens[i];
+	            
+	            //"If" first character is a number
+	            if (Character.isDigit(token.charAt(0))) {
+	                Double number = Double.valueOf(token);
+	                operands.push(number);
+				} else if ("(".equals(token)) {
+					operations.push(token.charAt(0)); // push character to operators stack
 				}
-				operations.push(token.charAt(0)); // push the current operator to stack
+				// Closed brace, evaluate the entire brace
+				else if (")".equals(token)) {
+					while (operations.peek() != '(') {
+						double output = performOperation(operands, operations);
+						operands.push(output); // push result back to stack
+					}
+					operations.pop();
+				}
+	
+				// current character is operator
+				else if (isOperator(token.charAt(0))) {
+					while (!operations.isEmpty() && precedence(token.charAt(0)) <= precedence(operations.peek())) {
+						double output = performOperation(operands, operations);
+						operands.push(output); // push result back to stack
+					}
+					operations.push(token.charAt(0)); // push the current operator to stack
+				}
 			}
-		}
-
-		while (!operations.isEmpty()) {
-			double output = performOperation(operands, operations);
-			operands.push(output); // push final result back to stack
+	
+			while (!operations.isEmpty()) {
+				double output = performOperation(operands, operations);
+				operands.push(output); // push final result back to stack
+			}
+			
+			return operands.pop();		
 		}
 		
-		return operands.pop();		
+		return null;
 	}
 
 	static int precedence(char c) {
@@ -74,7 +82,7 @@ public class Calculator {
 			return a * b;
 		case '/':
 			if (a == 0) {
-				System.out.println("Cannot divide by zero");
+				System.out.println("Cant divide by zero");
 				return 0;
 			}
 			return b / a;

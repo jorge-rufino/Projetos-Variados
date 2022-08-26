@@ -3,13 +3,14 @@ package gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.script.ScriptException;
-
 import entities.Calculator;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import util.Constraints;
 import util.Utils;
 
@@ -37,6 +38,8 @@ public class MainController implements Initializable{
 	private Button btn8;
 	@FXML
 	private Button btn9;
+	@FXML
+	private Button btnDot;
 	
 	@FXML
 	private Button btnSum;
@@ -48,12 +51,12 @@ public class MainController implements Initializable{
 	private Button btnDivide;
 	@FXML
 	private Button btnResult;
-	
-	public void onBtn0Action() {
-		String strField = txtResult.getText();		
-		txtResult.setText(strField+"0");
-		Utils.gainFocus(txtResult);		
-	}
+	@FXML
+	private Button btnExpon;
+	@FXML
+	private Button btnDelete;
+	@FXML
+	private Button btnDeleteAll;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -61,14 +64,10 @@ public class MainController implements Initializable{
 		Constraints.impedeSinais(txtResult);
 	}
 	
-	public void onBtn0Result() throws ScriptException {
+	public void onBtn0Result() {
 		String strField = txtResult.getText();
 		Calculator obj = new Calculator();
 		txtResult.setText(""+obj.evaluate(strField));
-//		ScriptEngineManager script = new ScriptEngineManager();
-//		ScriptEngine javaScript = script.getEngineByName("JavaScript");
-//		txtResult.setText(""+javaScript.eval(strField));
-		
 		Utils.gainFocus(txtResult);		
 	}
 	
@@ -91,4 +90,102 @@ public class MainController implements Initializable{
 		Utils.changeOperation(txtResult, "/");
 		Utils.gainFocus(txtResult);		
 	}
+	
+	public void onBtnExpon() {
+		Utils.changeOperation(txtResult, "^");
+		Utils.gainFocus(txtResult);		
+	}
+	
+	public void onBtnDelete() {
+		txtResult.setText(Utils.removeLastCharactere(txtResult.getText()));
+		Utils.gainFocus(txtResult);		
+	}
+	
+	public void onBtnDeleteAll() {
+		txtResult.setText("");
+		Utils.gainFocus(txtResult);
+	}
+	
+	//Atalho de teclado
+	public EventHandler<KeyEvent> keyShortcut = new EventHandler <KeyEvent>() {
+
+        @Override
+        public void handle(KeyEvent event) {
+        	//Se aperta ESC apaga todo o display
+            if (event.getCode() == KeyCode.ESCAPE) {
+            	onBtnDeleteAll();
+            }
+            
+            if (event.getCode() == KeyCode.EQUALS || event.getCode() == KeyCode.ENTER) {
+            	onBtn0Result();
+            }
+        }
+    };
+	
+    public void onBtn0Action() {
+		String strField = txtResult.getText();		
+		txtResult.setText(strField+"0");
+		Utils.gainFocus(txtResult);		
+	}
+	
+	public void onBtn1Action() {
+		String strField = txtResult.getText();		
+		txtResult.setText(strField+"1");
+		Utils.gainFocus(txtResult);		
+	}
+	
+	public void onBtn2Action() {
+		String strField = txtResult.getText();		
+		txtResult.setText(strField+"2");
+		Utils.gainFocus(txtResult);		
+	}
+	
+	public void onBtn3Action() {
+		String strField = txtResult.getText();		
+		txtResult.setText(strField+"3");
+		Utils.gainFocus(txtResult);		
+	}
+	
+	public void onBtn4Action() {
+		String strField = txtResult.getText();		
+		txtResult.setText(strField+"4");
+		Utils.gainFocus(txtResult);		
+	}
+	
+	public void onBtn5Action() {
+		String strField = txtResult.getText();		
+		txtResult.setText(strField+"5");
+		Utils.gainFocus(txtResult);		
+	}
+	
+	public void onBtn6Action() {
+		String strField = txtResult.getText();		
+		txtResult.setText(strField+"6");
+		Utils.gainFocus(txtResult);		
+	}
+	
+	public void onBtn7Action() {
+		String strField = txtResult.getText();		
+		txtResult.setText(strField+"7");
+		Utils.gainFocus(txtResult);		
+	}
+	
+	public void onBtn8Action() {
+		String strField = txtResult.getText();		
+		txtResult.setText(strField+"8");
+		Utils.gainFocus(txtResult);		
+	}
+	
+	public void onBtn9Action() {
+		String strField = txtResult.getText();		
+		txtResult.setText(strField+"9");
+		Utils.gainFocus(txtResult);		
+	}
+	
+	public void onBtnDotAction() {
+		String strField = txtResult.getText();		
+		txtResult.setText(strField+".");
+		Utils.gainFocus(txtResult);		
+	}
 }
+
