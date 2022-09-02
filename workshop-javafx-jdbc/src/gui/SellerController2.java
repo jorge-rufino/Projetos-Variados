@@ -128,7 +128,7 @@ public class SellerController implements Initializable, DataChangeListener {
 
 			// Cria um novo Stage/Palco que vai ficar por cima do Stage principal
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Enter Seller data");
+			dialogStage.setTitle("Enter Seller data:");
 			dialogStage.setScene(new Scene(pane)); // Passa o form como cena
 			dialogStage.setResizable(false); // Nao pode redimensionar a janela
 			dialogStage.initOwner(parentStage); // Informa quem é o "PAI" dessa janela
