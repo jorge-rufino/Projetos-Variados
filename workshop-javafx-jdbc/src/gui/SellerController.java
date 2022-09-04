@@ -32,6 +32,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Seller;
+import model.services.DepartmentService;
 import model.services.SellerService;
 
 public class SellerController implements Initializable, DataChangeListener {
@@ -121,8 +122,9 @@ public class SellerController implements Initializable, DataChangeListener {
 
 			SellerFormController controller = loader.getController();
 			controller.setSeller(obj);
-			controller.setSellerService(new SellerService());
-			controller.subscribeDataChangeListener(this); // Se inscreve para receber o Evento (Assim fica
+			controller.setServices(new SellerService(), new DepartmentService());		
+			controller.loadAssociatedObjects();				//Carrega os dados da ComboBox
+			controller.subscribeDataChangeListener(this); 	// Se inscreve para receber o Evento (Assim fica
 															// ouvindo/esperando para atualizar a tabela)
 			controller.updateFormData();
 
@@ -143,6 +145,7 @@ public class SellerController implements Initializable, DataChangeListener {
 			dialogStage.showAndWait();
 
 		} catch (IOException e) {
+			e.printStackTrace();
 			Alerts.showAlert("IO Excpetion", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}
