@@ -1,13 +1,16 @@
 package gui;
 
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import db.DbException;
 import gui.listeners.DataChangeListener;
@@ -128,7 +131,30 @@ public class SellerFormController implements Initializable {
 		}
 
 		obj.setName(txtName.getText());
+		
+		if (txtEmail.getText() == null || txtEmail.getText().trim().equals("")) {
+			exception.addError("email", "Field can't be empty");
+		}
 
+		obj.setEmail(txtEmail.getText());
+		
+		if (dpBirhtDate.getValue() == null ) {
+			exception.addError("birthDate", "Field can't be empty");
+		}
+		else {
+			Instant instant = Instant.from(dpBirhtDate.getValue().atStartOfDay(ZoneId.systemDefault()));
+
+			obj.setDate(Date.from(instant));
+		}
+				
+		if (txtSalary.getText() == null || txtSalary.getText().trim().equals("")) {
+			exception.addError("salary", "Field can't be empty");
+		}
+
+		obj.setSalary(Utils.tryParseToDouble(txtSalary.getText()));
+		
+		obj.setDepartment(comboBoxDepartment.getValue());
+		
 		// Lança a exceção no final pois caso tenha varios campos e algum deles
 		// adcionasse um erro, lançaria o erro de todos
 		if (exception.getErros().size() > 0) {
@@ -167,7 +193,7 @@ public class SellerFormController implements Initializable {
 														// String
 		txtName.setText(entity.getName());
 		txtEmail.setText(entity.getEmail());
-//		txtSalary.setText(String.format("%.2f", entity.getSalary()));
+		txtSalary.setText(String.format("%.2f", entity.getSalary()));
 		if (entity.getDate() != null) {
 			dpBirhtDate.setValue(LocalDate.ofInstant(entity.getDate().toInstant(), ZoneId.systemDefault()));
 		}
@@ -195,12 +221,22 @@ public class SellerFormController implements Initializable {
 		comboBoxDepartment.setItems(obsList);
 	}
 
-	private void setErrorMessages(Map<String, String> erros) {
-		for (String key : erros.keySet()) {
-			if (key.equals("name")) {
-				labelError.setText(erros.get(key));
-			}
+	private void setErrorMessages(Map<String, String> errors) {
+		Set<String> fields = errors.keySet();
+		
+		if (fields.contains("name")) {
+			labelError.setText(errors.get("name"));
+		} else {
+			labelError.setText("");
 		}
+		
+		//Operador Ternario			condição				caso "true"			  caso "false"	
+		labelErrorEmail.setText((fields.contains("email") ? errors.get("email") : ""));
+		
+		labelErrorSalary.setText((fields.contains("salary") ? errors.get("salary") : ""));
+		
+		labelErrorBirthDate.setText((fields.contains("birthDate") ? errors.get("birthDate") : ""));
+		
 	}
 
 	private void initializeComboBoxDepartment() {
