@@ -1,1 +1,2 @@
-# Criei este repositório para fazer testes e manter o histórico de vários projetos Java.
+## Repositório com vários projetos que utilizo para estudar e colocar em prática um pouco dos meus conhecimentos.
+
