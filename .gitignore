@@ -35,3 +35,6 @@ build/
 nbbuild/
 dist/
 nbdist/ 
+
+# Arquivos Hmtl
+frontend/curso/
