@@ -82,3 +82,7 @@ article > footer{
     padding: 12px 25px;
     text-decoration: none;      /*Remove estilos do texto como o sublinhado*/
 }
+
+.botao:hover, .botao:focus{         /*Quando passar o mouse em cima do botao ou ele estiver em foco*/
+    background-color: #0e6400;
+}
