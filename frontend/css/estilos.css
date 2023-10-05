@@ -74,3 +74,11 @@ article > ul > li{
 article > footer{
     text-align: center;
 }
+
+.botao{
+    display: inline-block;
+    background-color: #127d00;
+    color: #fff;
+    padding: 12px 25px;
+    text-decoration: none;      /*Remove estilos do texto como o sublinhado*/
+}
