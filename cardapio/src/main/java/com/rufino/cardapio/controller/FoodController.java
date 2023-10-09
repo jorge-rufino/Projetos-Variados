@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rufino.cardapio.entitie.Food;
-import com.rufino.cardapio.repository.FoodRepository;
+import com.rufino.cardapio.service.FoodService;
 
 @RestController
 @RequestMapping("food")
 public class FoodController {
 
 	@Autowired
-	private FoodRepository foodRepository;
+	private FoodService foodService;
 	
 	@GetMapping
 	public List<Food> getAll() {
 		
-		List<Food> foodList = foodRepository.findAll();		
+		List<Food> foodList = foodService.getAll();		
 		return foodList;
 	}
 }
