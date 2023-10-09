@@ -1,5 +1,7 @@
 package com.rufino.cardapio.entitie;
 
+import com.rufino.cardapio.dto.FoodRequestDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,4 +31,11 @@ public class Food {
 	private String image;
 	
 	private Integer price;
+	
+//	Construtor para tranformar um objeto "FoodRequestDto" em um "Food"
+	public Food(FoodRequestDto data) {
+		this.title = data.title();
+		this.image = data.image();
+		this.price = data.price();
+	}
 }
