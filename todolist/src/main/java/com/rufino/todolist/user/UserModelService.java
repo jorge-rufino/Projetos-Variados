@@ -16,6 +16,12 @@ public class UserModelService {
 	}
 	
 	public UserModel create(UserModel userModel) {
+		UserModel existUserModel = repository.findByUsername(userModel.getUsername());
+		
+		if (existUserModel != null) {			
+			return null;
+		}
+		
 		return repository.save(userModel);
 	}
 }
