@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 	
 	@Autowired
-	private UserModelRepository userModelRepository;
+	private UserModelService userModelService;
 	
 	@GetMapping
-	public List<UserModel> teste() {
-		return userModelRepository.findAll();
+	public List<UserModel> listAll() {
+		return userModelService.listAll();
 	}
 	
 	@PostMapping
 	public UserModel createUser(@RequestBody UserModel userModel) {
-		return userModelRepository.save(userModel);
+		return userModelService.create(userModel);
 	}
 }
