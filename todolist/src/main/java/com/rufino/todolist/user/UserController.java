@@ -1,5 +1,8 @@
 package com.rufino.todolist.user;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,13 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 	
+	@Autowired
+	private UserModelRepository userModelRepository;
+	
 	@GetMapping
-	public String teste() {
-		return "teste";
+	public List<UserModel> teste() {
+		return userModelRepository.findAll();
 	}
 	
 	@PostMapping
-	public void createUser(@RequestBody UserModel userModel) {
-		System.out.println(userModel);
+	public UserModel createUser(@RequestBody UserModel userModel) {
+		return userModelRepository.save(userModel);
 	}
 }
