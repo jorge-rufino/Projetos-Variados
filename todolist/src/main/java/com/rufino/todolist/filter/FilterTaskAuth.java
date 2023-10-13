@@ -25,8 +25,10 @@ public class FilterTaskAuth extends OncePerRequestFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
+//		Captura o caminho/endpoint da requisição
 		var servletPath = request.getServletPath();
 		
+//		Queremos autenticar somente as requisições feitas no endpoint de "Task"
 		if(servletPath.equals("/tasks")){
 			
 //		***Capturar os dados de autenticacao (usuario e senha)***
@@ -62,6 +64,10 @@ public class FilterTaskAuth extends OncePerRequestFilter{
 				
 //			Se as senhas forem iguais, irá retornar um "true"
 				if(passwordVerify.verified) {
+					
+//					Passa o "id" na requisição para ser capturado no "controller"
+					request.setAttribute("idUser", user.getId());
+					
 					filterChain.doFilter(request, response);		
 					
 				} else {
