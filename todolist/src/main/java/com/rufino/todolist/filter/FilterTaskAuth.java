@@ -29,7 +29,7 @@ public class FilterTaskAuth extends OncePerRequestFilter{
 		var servletPath = request.getServletPath();
 		
 //		Queremos autenticar somente as requisições feitas no endpoint de "Task"
-		if(servletPath.equals("/tasks")){
+		if(servletPath.startsWith("/tasks")){
 			
 //		***Capturar os dados de autenticacao (usuario e senha)***
 			
