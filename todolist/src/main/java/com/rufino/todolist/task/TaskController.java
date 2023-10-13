@@ -29,21 +29,21 @@ public class TaskController {
 	private TaskRepository taskRepository;
 	
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody TaskModel taskModel, HttpServletRequest request) {
+	public ResponseEntity<?> create(@RequestBody TaskModel taskInput, HttpServletRequest request) {
 		var idUser = request.getAttribute("idUser");
-		taskModel.setIdUser((UUID) idUser);
+		taskInput.setIdUser((UUID) idUser);
 		
 		var currentDate = LocalDateTime.now();
 		
-		if(currentDate.isAfter(taskModel.getStartAt()) || currentDate.isAfter(taskModel.getEndAt())) {
+		if(currentDate.isAfter(taskInput.getStartAt()) || currentDate.isAfter(taskInput.getEndAt())) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("As datas de inicio ou fim devem ser maior que a data atual.");
 		}
 		
-		if(taskModel.getEndAt().isBefore(taskModel.getStartAt())) {
+		if(taskInput.getEndAt().isBefore(taskInput.getStartAt())) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A data de fim deve ser maior que a data inicial.");
 		}
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(taskRepository.save(taskModel));
+		return ResponseEntity.status(HttpStatus.CREATED).body(taskRepository.save(taskInput));
 	}
 	
 	@GetMapping
@@ -54,21 +54,42 @@ public class TaskController {
 	}
 	
 	@PutMapping("/{id}")
-	public TaskModel update(@RequestBody TaskModel taskModel, @PathVariable UUID id, HttpServletRequest request) {
-		TaskModel task = taskRepository.findById(id).get();		
-				
-		BeanUtils.copyProperties(taskModel, task,"id", "idUser", "createAt");
+	public ResponseEntity<?> update(@RequestBody TaskModel taskInput, @PathVariable UUID id, HttpServletRequest request) {
 		
-		return taskRepository.save(task);
+		TaskModel task = taskRepository.findById(id).orElse(null);
+		
+		var idUser = request.getAttribute("idUser");
+		
+		if(task == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tarefa não existe.");
+		}
+		
+		if(!task.getIdUser().equals(idUser)) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário não tem permissão para alterar a tarefa.");
+		}
+				
+		BeanUtils.copyProperties(taskInput, task,"id", "idUser", "createAt");
+		
+		return ResponseEntity.status(HttpStatus.OK).body(taskRepository.save(task));
 	}
 	
 	@PatchMapping("/{id}")
-	public TaskModel updateParcial(@RequestBody TaskModel taskModel, @PathVariable UUID id, HttpServletRequest request) {
+	public ResponseEntity<?> updateParcial(@RequestBody TaskModel taskInput, @PathVariable UUID id, HttpServletRequest request) {
 		
-		TaskModel task = taskRepository.findById(id).get();
+		TaskModel task = taskRepository.findById(id).orElse(null);
 		
-		Utils.copyNonNullProperties(taskModel, task);
+		var idUser = request.getAttribute("idUser");
+		
+		if(task == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tarefa não existe.");
+		}
+		
+		if(!task.getIdUser().equals(idUser)) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário não tem permissão para alterar a tarefa.");
+		}
+		
+		Utils.copyNonNullProperties(taskInput, task);
 	
-		return taskRepository.save(task);
+		return ResponseEntity.status(HttpStatus.OK).body(taskRepository.save(task));
 	}
 }
