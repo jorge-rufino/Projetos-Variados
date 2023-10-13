@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.rufino.todolist.util.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -57,5 +60,15 @@ public class TaskController {
 		taskModel.setCreateAt(LocalDateTime.now());
 		
 		return taskRepository.save(taskModel);
+	}
+	
+	@PatchMapping("/{id}")
+	public TaskModel updateParcial(@RequestBody TaskModel taskModel, @PathVariable UUID id, HttpServletRequest request) {
+		
+		TaskModel task = taskRepository.findById(id).get();
+		
+		Utils.copyNonNullProperties(taskModel, task);
+	
+		return taskRepository.save(task);
 	}
 }
