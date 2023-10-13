@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
 @Service
 public class UserModelService {
 
@@ -21,6 +23,11 @@ public class UserModelService {
 		if (existUserModel != null) {			
 			return null;
 		}
+		
+		//Primeiro parametro é a complexidade da criptografia, quanto maior mais demora. O padrao recomendado é 12
+		var passwordHashred = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
+		
+		userModel.setPassword(passwordHashred);
 		
 		return repository.save(userModel);
 	}
