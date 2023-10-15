@@ -26,7 +26,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class TaskController {
 
 	@Autowired
-	private TaskService taskRepository;
+	private TaskService taskService;
 	
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody TaskModel taskInput, HttpServletRequest request) {
@@ -43,20 +43,20 @@ public class TaskController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A data de fim deve ser maior que a data inicial.");
 		}
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(taskRepository.create(taskInput));
+		return ResponseEntity.status(HttpStatus.CREATED).body(taskService.create(taskInput));
 	}
 	
 	@GetMapping
 	public List<TaskModel> list(HttpServletRequest request){
 		var idUser = request.getAttribute("idUser");
 		
-		return taskRepository.findByIdUser((UUID) idUser);
+		return taskService.findByIdUser((UUID) idUser);
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody TaskModel taskInput, @PathVariable UUID id, HttpServletRequest request) {
 		
-		TaskModel task = taskRepository.findById(id);
+		TaskModel task = taskService.findById(id);
 		
 		var idUser = request.getAttribute("idUser");
 		
@@ -70,13 +70,13 @@ public class TaskController {
 				
 		BeanUtils.copyProperties(taskInput, task,"id", "idUser", "createAt");
 		
-		return ResponseEntity.status(HttpStatus.OK).body(taskRepository.create(task));
+		return ResponseEntity.status(HttpStatus.OK).body(taskService.create(task));
 	}
 	
 	@PatchMapping("/{id}")
 	public ResponseEntity<?> updateParcial(@RequestBody TaskModel taskInput, @PathVariable UUID id, HttpServletRequest request) {
 		
-		TaskModel task = taskRepository.findById(id);
+		TaskModel task = taskService.findById(id);
 		
 		var idUser = request.getAttribute("idUser");
 		
@@ -90,6 +90,6 @@ public class TaskController {
 		
 		Utils.copyNonNullProperties(taskInput, task);
 	
-		return ResponseEntity.status(HttpStatus.OK).body(taskRepository.create(task));
+		return ResponseEntity.status(HttpStatus.OK).body(taskService.create(task));
 	}
 }
