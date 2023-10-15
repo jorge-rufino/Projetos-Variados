@@ -26,7 +26,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class TaskController {
 
 	@Autowired
-	private TaskRepository taskRepository;
+	private TaskService taskRepository;
 	
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody TaskModel taskInput, HttpServletRequest request) {
@@ -43,7 +43,7 @@ public class TaskController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A data de fim deve ser maior que a data inicial.");
 		}
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(taskRepository.save(taskInput));
+		return ResponseEntity.status(HttpStatus.CREATED).body(taskRepository.create(taskInput));
 	}
 	
 	@GetMapping
@@ -56,7 +56,7 @@ public class TaskController {
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody TaskModel taskInput, @PathVariable UUID id, HttpServletRequest request) {
 		
-		TaskModel task = taskRepository.findById(id).orElse(null);
+		TaskModel task = taskRepository.findById(id);
 		
 		var idUser = request.getAttribute("idUser");
 		
@@ -70,13 +70,13 @@ public class TaskController {
 				
 		BeanUtils.copyProperties(taskInput, task,"id", "idUser", "createAt");
 		
-		return ResponseEntity.status(HttpStatus.OK).body(taskRepository.save(task));
+		return ResponseEntity.status(HttpStatus.OK).body(taskRepository.create(task));
 	}
 	
 	@PatchMapping("/{id}")
 	public ResponseEntity<?> updateParcial(@RequestBody TaskModel taskInput, @PathVariable UUID id, HttpServletRequest request) {
 		
-		TaskModel task = taskRepository.findById(id).orElse(null);
+		TaskModel task = taskRepository.findById(id);
 		
 		var idUser = request.getAttribute("idUser");
 		
@@ -90,6 +90,6 @@ public class TaskController {
 		
 		Utils.copyNonNullProperties(taskInput, task);
 	
-		return ResponseEntity.status(HttpStatus.OK).body(taskRepository.save(task));
+		return ResponseEntity.status(HttpStatus.OK).body(taskRepository.create(task));
 	}
 }
