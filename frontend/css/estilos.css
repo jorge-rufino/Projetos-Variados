@@ -37,10 +37,17 @@ header img{
 
 article{
     border: 1px solid #95a4a5;
-    width: 30%;
-    padding: 10px;
-    float: left;
-    margin-right: 5%;
+    padding: 10px;     
+}
+
+/*Quando tiver largura minima de 800px, ou seja, a partir de 800px pra cima vai aplicar este estilo
+Ele faz com que as caixas fiquem lado a lado*/
+@media (min-width: 800px) {
+    article{
+        width: 30%;       
+        float: left;
+        margin-right: 5%;
+    }
 }
 
 article > h2{
