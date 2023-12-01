@@ -18,26 +18,30 @@
 Ele faz com que as caixas fiquem lado a lado*/
 
 .plano__cabecalho{
-  background-color: #95a4a5;
-  color: #fff;
-  text-align: center;
-  line-height: 2.5;       /*Aumenta em 2.5 a altura*/    
   margin: -10px;          /*Como usei um padding de 10px no elemento "article" compensei colocando um margin negativo para colar nas bordas*/
   margin-bottom: 0;       /*Devido uma margem negativa, o texto do valor ficou em cima da cor cinza, então usei margem 0 para ajustar isso*/
+  
+  background-color: #95a4a5;
+  color: #fff;
+
+  text-align: center;
+  line-height: 2.5;       /*Aumenta em 2.5 a altura*/      
   font-weight: normal;
   font-size: 28px;
 }
 
 .plano__preco{
+  margin: 20px 0; 
+
   text-align: center;
-  font-size: 28px;
-  margin: 20px 0;         
+  font-size: 28px;          
 }
 
 .plano__caracteristicas{
-  list-style: none;
-  padding: 0;
   margin: 20px 0;
+  padding: 0;  
+
+  list-style: none;  
 }
 
 .plano__caracteristicas > li{
@@ -53,17 +57,20 @@ Ele faz com que as caixas fiquem lado a lado*/
 \*-------------------*/
 
 .botao{
+  padding: 12px 25px;
   display: inline-block;
+
   background-color: #bbb;
   color: #fff;
-  padding: 12px 25px;
+  
   text-decoration: none;      /*Remove estilos do texto como o sublinhado*/
 }
 
 .botao:hover, .botao:focus{         /*Quando passar o mouse em cima do botao ou ele estiver em foco*/
-  background-color: #aaa;
-  text-decoration: none;
+  background-color: #aaa;  
   color: #fff;
+
+  text-decoration: none;
 }
 
 .botao--assinar{
