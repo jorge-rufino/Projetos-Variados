@@ -1,0 +1,12 @@
+/*  bootstrap-grid.css já vem com esta config
+*{
+  box-sizing: border-box;
+} 
+*/
+
+body{
+  margin: 0;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;    
+}

@@ -1,0 +1,75 @@
+/*-------------------*\
+  PLANO
+\*-------------------*/
+
+.plano{
+  border: 1px solid #95a4a5;
+  padding: 10px;     
+}
+
+/*Quando tiver largura minima de 800px, ou seja, a partir de 800px pra cima vai aplicar este estilo
+@media (min-width: 800px) {
+  article{
+      width: 30%;       
+      float: left;
+      margin-right: 5%;
+  }
+}
+Ele faz com que as caixas fiquem lado a lado*/
+
+.plano__cabecalho{
+  background-color: #95a4a5;
+  color: #fff;
+  text-align: center;
+  line-height: 2.5;       /*Aumenta em 2.5 a altura*/    
+  margin: -10px;          /*Como usei um padding de 10px no elemento "article" compensei colocando um margin negativo para colar nas bordas*/
+  margin-bottom: 0;       /*Devido uma margem negativa, o texto do valor ficou em cima da cor cinza, então usei margem 0 para ajustar isso*/
+  font-weight: normal;
+  font-size: 28px;
+}
+
+.plano__preco{
+  text-align: center;
+  font-size: 28px;
+  margin: 20px 0;         
+}
+
+.plano__caracteristicas{
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.plano__caracteristicas > li{
+  text-align: center;
+}
+
+.plano__rodape{
+  text-align: center;
+}
+
+/*-------------------*\
+  BOTAO
+\*-------------------*/
+
+.botao{
+  display: inline-block;
+  background-color: #bbb;
+  color: #fff;
+  padding: 12px 25px;
+  text-decoration: none;      /*Remove estilos do texto como o sublinhado*/
+}
+
+.botao:hover, .botao:focus{         /*Quando passar o mouse em cima do botao ou ele estiver em foco*/
+  background-color: #aaa;
+  text-decoration: none;
+  color: #fff;
+}
+
+.botao--assinar{
+  background-color: #127d00;
+}
+
+.botao--assinar:hover, .botao--assinar:focus{
+  background-color: #0e6400;
+}

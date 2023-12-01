@@ -8,26 +8,29 @@
 
     <!--A ordem de importação aqui é importante-->    
     <link rel="stylesheet" href="css/bootstrap-grid.min.css">   <!-- O Bootstrap já utiliza o normalize dentro dele -->
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/componentes.css">
     
   </head>
   <body>
     
-    <header>
+    <header class="layout-cabecalho">
         <div class="container">
             <img src="images/logo.png" width="100" height="35" alt="MyPilas">
         </div>        
     </header>
 
-    <div id="planos">
+    <div id="planos" class="layout-planos">
       <div class="container">
 
         <div class="row">
+
           <div class="col-md-4">
-            <article>
-              <h2>Autônomo</h2>
-              <div>R$59/mês</div>
-              <ul>
+            <article class="plano">
+              <h2 class="plano__cabecalho">Autônomo</h2>
+              <div class="plano__preco">R$59/mês</div>
+              <ul class="plano__caracteristicas">
                 <li>Até <Strong>2 usuários</Strong></li>
                 <li><strong>500MB</strong> de armazenamento</li>
                 <li>Lançamentos ilimitados</li>
@@ -35,19 +38,17 @@
                 <li>Sem fidelidade</li>
               </ul>
     
-              <footer>
-                <a href="assine.html" class="botao">Assinar</a>
+              <footer class="plano__rodape">
+                <a href="assine.html" class="botao botao--assinar">Assinar</a>
               </footer>
             </article>
           </div>
-        
-
-       
+               
           <div class="col-md-4">
-            <article>
-              <h2>Micro</h2>
-              <div>R$89/mês</div>
-              <ul>
+            <article class="plano">
+              <h2 class="plano__cabecalho">Micro</h2>
+              <div class="plano__preco">R$89/mês</div>
+              <ul class="plano__caracteristicas">
                 <li>Até <Strong>6 usuários</Strong></li>
                 <li><strong>1GB</strong> de armazenamento</li>
                 <li>Lançamentos ilimitados</li>
@@ -55,8 +56,8 @@
                 <li>Sem fidelidade</li>
               </ul>
     
-              <footer>
-                <a href="assine.html" class="botao">Assinar</a>
+              <footer class="plano__rodape">
+                <a href="assine.html" class="botao botao--assinar">Assinar</a>
               </footer>
             </article>
           </div>
@@ -64,10 +65,10 @@
 
         
           <div class="col-md-4">
-            <article style="margin-right: 0;">
-              <h2>Pequena</h2>
-              <div>R$99/mês</div>
-              <ul>
+            <article class="plano" style="margin-right: 0;">
+              <h2 class="plano__cabecalho">Pequena</h2>
+              <div class="plano__preco">R$99/mês</div>
+              <ul class="plano__caracteristicas">
                 <li>Até <Strong>10 usuários</Strong></li>
                 <li><strong>5GB</strong> de armazenamento</li>
                 <li>Lançamentos ilimitados</li>
@@ -75,8 +76,8 @@
                 <li>Sem fidelidade</li>
               </ul>
     
-              <footer>
-                <a href="assine.html" class="botao">Assinar</a>
+              <footer class="plano__rodape">
+                <a href="assine.html" class="botao botao--assinar">Assinar</a>
               </footer>
             </article>
           </div>
