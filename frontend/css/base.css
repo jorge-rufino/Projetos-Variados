@@ -4,6 +4,10 @@
 } 
 */
 
+html {
+  font-size: 62.5%; /*Altera tamanho padrao da fonte para 10px, assim fica mais facil calcular as medidas*/
+}
+
 body{
   margin: 0;
 

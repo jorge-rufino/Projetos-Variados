@@ -5,6 +5,8 @@
 .plano{
   border: 1px solid #95a4a5;
   padding: 10px;     
+
+  font-size: 1.4rem;  /*14px (1.4x da fonte padrao, que foi alterada no base.css para 10px*/
 }
 
 /*Quando tiver largura minima de 800px, ou seja, a partir de 800px pra cima vai aplicar este estilo
@@ -27,19 +29,21 @@ Ele faz com que as caixas fiquem lado a lado*/
   text-align: center;
   line-height: 2.5;       /*Aumenta em 2.5 a altura*/      
   font-weight: normal;
-  font-size: 28px;
+  font-size: 2em;         /*2x do pai (14px) que será 28px*/
 }
 
 .plano__preco{
   margin: 20px 0; 
 
   text-align: center;
-  font-size: 28px;          
+  font-size: 2.8rem;        /*2.8x a fonte padrão alterada (10px), que será 28px*/
 }
 
 .plano__caracteristicas{
   margin: 20px 0;
   padding: 0;  
+
+  font-size: 1em;
 
   list-style: none;  
 }
