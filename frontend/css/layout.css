@@ -1,6 +1,6 @@
 .layout-cabecalho{
   height: 60px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;  
 }
 
 .layout-cabecalho img{
@@ -15,4 +15,19 @@
   padding: 80px 0;
 
   background-color: #7ab55c;
+}
+
+.layout-depoimento{
+  padding: 80px 0;
+
+  background-color: #e7e7e7;
+}
+
+.layout-rodape{
+  padding: 40px 0;
+
+  background-color: #484848;
+
+  color: white;
+  text-align: center;
 }
