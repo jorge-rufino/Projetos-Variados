@@ -1,5 +1,6 @@
 .layout-cabecalho{
   height: 60px;
+  line-height: 60px;        /*Deu o espaçamento do Menu*/
   border-bottom: 1px solid #ccc;  
 
   background-color: #fff;
