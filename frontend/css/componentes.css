@@ -166,10 +166,24 @@ Ele faz com que as caixas fiquem lado a lado*/
 }
 
 .depoimento > blockquote{
+  position: relative;
+
   margin: 0;
   padding: 0 60px;
 
   text-align: center;  
+}
+
+.depoimento > blockquote::before{
+  position: absolute;
+  left: 0;
+  top: -0.25em;
+
+  color: #ccc;
+
+  font-size: 8em; /* 176px*/
+
+  content: "\201C";   /*Simbolo unicode*/
 }
 
 .depoimento__autor{
