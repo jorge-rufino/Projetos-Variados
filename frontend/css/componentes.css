@@ -83,6 +83,7 @@ Ele faz com que as caixas fiquem lado a lado*/
   background-color: #bbb;
   color: #fff;
   
+  line-height: normal;        /* Definindo "normal" pois ele estava herdando dos pais e afetando o botao de login */
   text-decoration: none;      /*Remove estilos do texto como o sublinhado*/
 }
 
@@ -93,11 +94,12 @@ Ele faz com que as caixas fiquem lado a lado*/
   text-decoration: none;
 }
 
-.botao--assinar{
+.botao--assinar, .botao--login{
   background-color: #127d00;
 }
 
-.botao--assinar:hover, .botao--assinar:focus{
+.botao--assinar:hover, .botao--assinar:focus,
+.botao--login:hover, .botao--login:focus{
   background-color: #0e6400;
 }
 
@@ -222,4 +224,35 @@ Ele faz com que as caixas fiquem lado a lado*/
   .botao-chaveador{
     display: none;
   }
+}
+
+/*-------------------*\
+  MENU
+\*-------------------*/
+.menu{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  width: 200px;
+  margin: 0;
+  padding: 20px;
+  border-right: 2px solid #eee;
+
+  font-size: 1.4rem;
+
+  background-color: #fbfbfb;
+
+  list-style: none;       /* Remove os pontos*/
+}
+
+.menu__item {
+  display: block;
+
+  line-height: 3;     /* Adicionado o "line-height: normal" na classe "botao" para evitar herança*/
+}
+
+.menu__item--botao{
+  margin-top: 20px;
 }
