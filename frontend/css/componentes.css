@@ -229,30 +229,45 @@ Ele faz com que as caixas fiquem lado a lado*/
 /*-------------------*\
   MENU
 \*-------------------*/
-.menu{
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-
-  width: 200px;
+.menu{  
   margin: 0;
-  padding: 20px;
-  border-right: 2px solid #eee;
-
+  
   font-size: 1.4rem;
-
-  background-color: #fbfbfb;
 
   list-style: none;       /* Remove os pontos*/
 }
 
-.menu__item {
-  display: block;
-
-  line-height: 3;     /* Adicionado o "line-height: normal" na classe "botao" para evitar herança*/
+@media(max-width: 991px){
+  .menu{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  
+    width: 200px;    
+    padding: 20px;
+    border-right: 2px solid #eee;
+    
+    background-color: #fbfbfb;
+  }
+  .menu__item {
+    display: block;
+  
+    line-height: 3;     /* Adicionado o "line-height: normal" na classe "botao" para evitar herança*/
+  }
+  
+  .menu__item--botao{
+    margin-top: 20px;
+  }  
 }
 
-.menu__item--botao{
-  margin-top: 20px;
-}
+@media(min-width: 992px){
+  .menu__item{
+    display: inline-block;
+    padding-right: 20px;
+  }
+
+  .menu__item:last-of-type{  /* Pega o ultimo item do mesmo tipo, no caso, o ultimo "li" que é o botao de login */ 
+    padding-right: 0px;      /* Remove os 20px do "padding-right" */
+  }
+} 
