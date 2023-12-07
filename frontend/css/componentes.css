@@ -312,5 +312,13 @@ Ele faz com que as caixas fiquem lado a lado*/
 }
 
 .campo {
-  width: 100%;
+  display: block;
+  width: 99%;
+  height: 2.0em;
+
+  padding: 5px;  
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  font-size: 1.4rem;
 }

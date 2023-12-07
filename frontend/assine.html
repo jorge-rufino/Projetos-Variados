@@ -30,20 +30,29 @@
 
         <form class="formulario" action="#" method="post">
           <h1 class="formulario-titulo"> Sua assinatura do MyPilas</h1>
-
+          
           <div class="grupo-entrada">
             <label for="razao-social">Razão social</label>
             <input id="razao-social" type="text" name="razaoSocial" class="campo" required>
           </div>
 
-          <div class="grupo-entrada">
-            <label for="cnpj">CNPJ</label>
-            <input id="cnpj" type="text" name="cnpj" class="campo" required>
-          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="grupo-entrada">
+                <label for="cnpj">CNPJ</label>
+                <input id="cnpj" class="campo" type="text" name="cnpj" required>
+              </div>
+            </div>            
 
-          <div class="grupo-entrada">
-            <label for="data-fundacao">Data de fundação</label>
-            <input id="data-fundacao" type="date" name="dataFundacao" class="campo" required>
+            <!-- Somente para fazer o espaçamento entre os campos/div-->
+            <div class="col-sm-1"></div>
+
+            <div class="col-sm-3">
+              <div class="grupo-entrada">
+                <label for="data-fundacao">Data de fundação</label>
+                <input id="data-fundacao" type="date" name="dataFundacao" class="campo" required>
+              </div>
+            </div>
           </div>
 
           <div class="grupo-entrada">
@@ -56,34 +65,52 @@
             <input id="email" type="email" name="email" class="campo" required>
           </div>
 
-          <div class="grupo-entrada">
-            <label for="estado">Estado</label>
-            <select id="estado" name="estado" class="campo">
-              <option>Selecione</option>
-              <option value="MG">Minas Gerais</option>
-              <option value="SP">São Paulo</option>
-              <option value="CE">Ceará</option>
-            </select>
-          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="grupo-entrada">
+                <label for="estado">Estado</label>
+                <select id="estado" name="estado" class="campo" required>
+                  <option>Selecione</option>
+                  <option value="MG">Minas Gerais</option>
+                  <option value="SP">São Paulo</option>
+                  <option value="CE">Ceará</option>
+                </select>
+              </div>
+            </div>  
 
-          <div class="grupo-entrada">
-            <label for="cidade">Cidade</label>
-            <select id="cidade" name="cidade" class="campo">
-              <option>Selecione</option>
-              <option value="1">Uberlândia</option>
-              <option value="2">São Paulo</option>
-              <option value="3">Fortaleza</option>
-            </select>
+             <!-- Somente para fazer o espaçamento entre os campos/div-->
+             <div class="col-sm-1"></div>
+
+            <div class="col-sm-3">
+              <div class="grupo-entrada">
+                <label for="cidade">Cidade</label>
+                <select id="cidade" name="cidade" class="campo" required>
+                  <option>Selecione</option>
+                  <option value="1">Uberlândia</option>
+                  <option value="2">São Paulo</option>
+                  <option value="3">Fortaleza</option>
+                </select>
+              </div>
+            </div>
           </div>
           
-          <div class="grupo-entrada">
-            <label for="senha">Senha</label>
-            <input id="senha" type="password" class="campo" required>
-          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="grupo-entrada">
+                <label for="senha">Senha</label>
+                <input id="senha" type="password" class="campo" required>
+              </div>
+            </div>
 
-          <div class="grupo-entrada">
-            <label for="confirmacao-senha">Confirmar senha</label>
-            <input id="confirmacao-senha" type="password" class="campo" required>
+            <!-- Somente para fazer o espaçamento entre os campos/div-->
+            <div class="col-sm-1"></div>
+
+            <div class="col-sm-3">
+              <div class="grupo-entrada">
+                <label for="confirmacao-senha">Confirmar senha</label>
+                <input id="confirmacao-senha" type="password" class="campo" required>
+              </div>
+            </div>
           </div>
 
           <div style="text-align: center; margin-top: 40px;">
