@@ -5,6 +5,8 @@
 */
 
 html {
+  scroll-behavior: smooth;
+
   font-size: 62.5%; /*Altera tamanho padrao da fonte para 10px, assim fica mais facil calcular as medidas*/
 }
 

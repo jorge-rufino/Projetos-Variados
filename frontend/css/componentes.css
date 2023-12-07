@@ -82,7 +82,8 @@ Ele faz com que as caixas fiquem lado a lado*/
 
   background-color: #bbb;
   color: #fff;
-  
+  border: none;               /* Remove as bordas do botao, pois o botao de enviar formulario por ser um input, vem com bordas por padrao*/
+
   line-height: normal;        /* Definindo "normal" pois ele estava herdando dos pais e afetando o botao de login */
   text-decoration: none;      /*Remove estilos do texto como o sublinhado*/
 }
@@ -206,6 +207,10 @@ Ele faz com que as caixas fiquem lado a lado*/
   float: right;
 }
 
+.navegacao--assinatura {
+  text-align: center;
+}
+
 /*-------------------*\
   BOTAO-CHAVEADOR
 \*-------------------*/
@@ -278,3 +283,34 @@ Ele faz com que as caixas fiquem lado a lado*/
     padding-right: 0px;      /* Remove os 20px do "padding-right" */
   }
 } 
+
+/*-------------------*\
+  FORMULARIO
+\*-------------------*/
+.formulario-titulo {
+  margin-top: 50px;
+  margin-bottom: 40px;
+
+  border-bottom: 1px solid #ccc;
+
+  font-size: 2.6rem;
+  font-weight: normal;
+  color: #004b86;
+}
+
+/*-------------------*\
+  GRUPO-ENTRADA
+\*-------------------*/
+.grupo-entrada{
+  margin-bottom: 20px;
+}
+
+.grupo-entrada > label{   /*Deixa a label em cima do input*/
+  display: block;
+
+  font-weight: bold;
+}
+
+.campo {
+  width: 100%;
+}
