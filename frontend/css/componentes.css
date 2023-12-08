@@ -322,3 +322,8 @@ Ele faz com que as caixas fiquem lado a lado*/
 
   font-size: 1.4rem;
 }
+
+.campo--estado , .campo--cidade{  
+  height: 40px;  
+  width: 103.5%;
+}
