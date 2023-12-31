@@ -1,13 +1,15 @@
 package application;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class GeradorApostas {
 
 	public static void main(String[] args) {
 
-        int quantidadeApostas = 8;
+        int quantidadeApostas = 80;
         int numerosPorAposta = 6;
         int quantidadeNumerosSorteio = 60;
         
@@ -20,27 +22,32 @@ public class GeradorApostas {
 
 	public static int[][] gerarApostasMegaSena(int quantidadeApostas, int numerosPorAposta, int quantidadeNumerosSorteio){
 		int [][] apostas = new int[quantidadeApostas][numerosPorAposta];
+		Set<String> apostasGeradas = new HashSet<>();
 		
 		Random random = new Random();
 		
-		for(int i = 0; i < quantidadeApostas; i++) {
-			for(int j = 0; j < numerosPorAposta; j++) {
-				
-				int numero;
+		for (int i = 0; i < quantidadeApostas; i++) {
 
-				//Gera o número e verifica se já existe para evitar números duplicados
-				do {
-					numero = random.nextInt(quantidadeNumerosSorteio) + 1;					
-				}while(contemNumero(apostas[i], numero));
-				
-				apostas[i][j] = numero;
-			}			
-			
-			// Ordenando os números
-            Arrays.sort(apostas[i]);
-		}
-		
-		return apostas;
+            int[] novaAposta;
+            do {
+                novaAposta = new int[numerosPorAposta];
+                
+                for (int j = 0; j < numerosPorAposta; j++) {                	
+                	int numero;
+                	
+            		do {
+            			numero = random.nextInt(quantidadeNumerosSorteio) + 1;
+            		}while (contemNumero(novaAposta, numero));
+            		
+            		novaAposta[j] =  numero;
+                }
+                Arrays.sort(novaAposta);
+            } while (!apostasGeradas.add(Arrays.toString(novaAposta))); // Verifica duplicatas
+
+            apostas[i] = novaAposta;
+        }
+
+        return apostas;
 	}
 
 	public static boolean contemNumero(int[] aposta, int numero) {
