@@ -9,9 +9,9 @@ public class GeradorApostas {
 
 	public static void main(String[] args) {
 
-        int quantidadeApostas = 50;
-        int numerosPorAposta = 6;
-        int quantidadeNumerosSorteio = 60;
+        int quantidadeApostas = 5;
+        int numerosPorAposta = 15;
+        int quantidadeNumerosSorteio = 25;
         Set<Set<Integer>> apostas = gerarApostasMegaSena(quantidadeApostas, numerosPorAposta, quantidadeNumerosSorteio);
 
         for (Set<Integer> aposta : apostas) {
