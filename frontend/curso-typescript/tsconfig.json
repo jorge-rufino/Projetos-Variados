@@ -3,7 +3,8 @@
     /* Language and Environment */
     "target": "ES2022",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */            
     "module": "es2022",
-    "noEmitOnError": true, 
+    "noEmitOnError": true,
+    "noImplicitAny": true,                               /*Faz com o TS não adote o tipo implicito "any". Voce pode utilizar definindo manunalmente*/ 
     /* Type Checking */
     "strict": true,                                      /* Enable all strict type-checking options. */ 
     "outDir": "dist/js",
