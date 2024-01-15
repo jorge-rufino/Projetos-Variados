@@ -15,33 +15,33 @@ export class Negociacao {
   //Temos 2 modos de fazer MÉTODOS "get"
   //Neste primeiro modo, quando formos chamar os métodos, iremos usar a sintaxe padrão de acessu a um atributo, sem parenteses.
   //Por exemplo: "negociacao.volume"
-  get data(){
+  get data(): Date{
     return this._data;
   }
 
-  get quantidade(){
+  get quantidade(): number{
     return this._quantidade;
   }
 
-  get valor(){
+  get valor(): number{
     return this._valor;
   }
 
   //Perceba que volume é um método, não existe um atributo de classe "volume".
-  get volume(){
+  get volume(): number{
     return this._quantidade * this._valor;
   }
 
   //Aqui temos os métodos "get" de maneira convencional
-  getData() {
+  getData(): Date {
     return this._data;
   }
 
-  getQuantidade(){
+  getQuantidade(): number{
     return this._quantidade;
   }
 
-  getValor(){
+  getValor(): number{
     return this._valor;
   }
 }
