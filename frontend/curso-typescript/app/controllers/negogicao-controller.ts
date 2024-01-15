@@ -11,11 +11,10 @@ export class NegociacaoController {
     this.inputValor = document.querySelector('#valor') as HTMLInputElement;
   }
 
-  adiciona() {    
-    const exp = /-/g;
-    const data = new Date(this.inputData.value.replace(exp,','));    
-    const quantidade = parseInt(this.inputQuantidade.value);
-    const valor = parseFloat(this.inputValor.value);
+  adiciona() {        
+    const data = new Date(this.inputData.value + 'T00:00:00');    
+    const quantidade = this.inputQuantidade.valueAsNumber;
+    const valor = this.inputValor.valueAsNumber;
 
     const negociacao = new Negociacao(data, quantidade, valor);
 
