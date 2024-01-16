@@ -1,10 +1,12 @@
 import { Negociacao } from "../models/negociacao.js";
+import { Negociacoes } from "../models/negociacoes.js";
 
 export class NegociacaoController {
   private inputData: HTMLDataElement;
   private inputQuantidade: HTMLInputElement;
   private inputValor: HTMLInputElement;
   private formulario: HTMLFormElement;
+  private negociacoes = new Negociacoes();
 
   constructor() {
     this.inputData = document.querySelector('#data') as HTMLDataElement;
@@ -15,7 +17,13 @@ export class NegociacaoController {
 
   adiciona(): void {        
     const negociacao = this.criaNegociacao();
-    console.log(negociacao);
+    this.negociacoes.adicionar(negociacao);
+    /* 
+    Do jeito que estar, nós podemos por exemplo fazer um "pop" para remover um item da lista, e não é isso que queremos
+    queremos fazer a lista imutável
+    this.negociacoes.listar().pop()
+    */
+    console.log(this.negociacoes.listar());
     this.limparFormulario();
   }
   
