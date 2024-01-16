@@ -18,6 +18,8 @@ export class NegociacaoController {
   adiciona(): void {        
     const negociacao = this.criaNegociacao();
     this.negociacoes.adicionar(negociacao);        
+
+    negociacao.data.setDate(12);
     
     //Como alteramos o retorno do metodo "listar", se tentarmos usar metodos que modificam o array, dará erro.
     //this.negociacoes.listar().pop()
