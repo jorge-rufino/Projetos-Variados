@@ -4,11 +4,13 @@ export class NegociacaoController {
   private inputData: HTMLDataElement;
   private inputQuantidade: HTMLInputElement;
   private inputValor: HTMLInputElement;
+  private formulario: HTMLFormElement;
 
   constructor() {
     this.inputData = document.querySelector('#data') as HTMLDataElement;
     this.inputQuantidade = document.querySelector('#quantidade') as HTMLInputElement;
     this.inputValor = document.querySelector('#valor') as HTMLInputElement;
+    this.formulario = document.querySelector('.form') as HTMLFormElement;
   }
 
   adiciona(): void {        
@@ -25,9 +27,7 @@ export class NegociacaoController {
   }
 
   limparFormulario(): void {
-    this.inputData.value = '';
-    this.inputQuantidade.value = '';
-    this.inputValor.value = '';
+    this.formulario.reset();
     this.inputData.focus();
   }
 }
