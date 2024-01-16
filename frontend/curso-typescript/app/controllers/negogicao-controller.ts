@@ -17,12 +17,10 @@ export class NegociacaoController {
 
   adiciona(): void {        
     const negociacao = this.criaNegociacao();
-    this.negociacoes.adicionar(negociacao);
-    /* 
-    Do jeito que estar, nós podemos por exemplo fazer um "pop" para remover um item da lista, e não é isso que queremos
-    queremos fazer a lista imutável
+    this.negociacoes.adicionar(negociacao);    
+    //Como alteramos o metodo listar com o "spread operator" para sempre retornar um novo array e não uma referencia para o objeto original,
+    //quando fazemos o "pop", ele é feito em um array e quando chamamos o "listar" é retornado um novo array, garantindo a IMUTABILIDADE.
     this.negociacoes.listar().pop()
-    */
     console.log(this.negociacoes.listar());
     this.limparFormulario();
   }

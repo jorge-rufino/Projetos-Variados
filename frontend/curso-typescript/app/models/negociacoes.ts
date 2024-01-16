@@ -8,6 +8,7 @@ export class Negociacoes {
   }
 
   listar(): Array<Negociacao> {
-    return this.listaNegociacoes;
+    //Com o spread operator, em vez de devolver a lista, devolvemos uma nova lista criada a partir da lista original
+    return [...this.listaNegociacoes];
   }
 }
