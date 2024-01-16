@@ -17,10 +17,10 @@ export class NegociacaoController {
 
   adiciona(): void {        
     const negociacao = this.criaNegociacao();
-    this.negociacoes.adicionar(negociacao);    
-    //Como alteramos o metodo listar com o "spread operator" para sempre retornar um novo array e não uma referencia para o objeto original,
-    //quando fazemos o "pop", ele é feito em um array e quando chamamos o "listar" é retornado um novo array, garantindo a IMUTABILIDADE.
-    this.negociacoes.listar().pop()
+    this.negociacoes.adicionar(negociacao);        
+    
+    //Como alteramos o retorno do metodo "listar", se tentarmos usar metodos que modificam o array, dará erro.
+    //this.negociacoes.listar().pop()
     console.log(this.negociacoes.listar());
     this.limparFormulario();
   }

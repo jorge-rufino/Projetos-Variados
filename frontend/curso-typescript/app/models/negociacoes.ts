@@ -7,8 +7,8 @@ export class Negociacoes {
     this.listaNegociacoes.push(negociacao);
   }
 
-  listar(): Array<Negociacao> {
-    //Com o spread operator, em vez de devolver a lista, devolvemos uma nova lista criada a partir da lista original
-    return [...this.listaNegociacoes];
+  listar(): ReadonlyArray<Negociacao> {
+    //Definindo o retorno como "ReadonlyArray", não será permitido o uso de metódos que modifiquem o array como o "pop" e "push"
+    return this.listaNegociacoes;
   }
 }
