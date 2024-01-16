@@ -1,16 +1,11 @@
 export class Negociacao {
-  //O "_" é uma convenção javascript para indicar que os campos são privados. Não é obrigatório.
-  private _data: Date;
-  private _quantidade: number;
-  private _valor: number;
-
-  //Como aqui no construtor que estamos atribuindo o valor as propriedades da classe, o TS automaticamente faz com que as propriedades de class
-  //tenham o mesmo tipo das propriedades dos parametros do construtor
-  constructor(data: Date, quantidade: number, valor: number){
-    this._data = data;
-    this._quantidade = quantidade;
-    this._valor = valor;  
-  }
+  
+  //Definindo os parametros do construtor como "private", o TS automaticamente irá criar propriedades de classe com os mesmos nomes
+  //Deste modo, nos economizar ter que digitar as propriedades de classe e fazer a atribuiçao com os parametros do construtor.
+  constructor(
+    private _data: Date, 
+    private _quantidade: number, 
+    private _valor: number){}
 
   //Temos 2 modos de fazer MÉTODOS "get"
   //Neste primeiro modo, quando formos chamar os métodos, iremos usar a sintaxe padrão de acessu a um atributo, sem parenteses.
