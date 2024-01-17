@@ -10,6 +10,9 @@ export class NegociacoesView {
 
   //O map retorna um array, então usamos o "join" para ele juntar tudo. O parametro serve para separar os arrays e como neste caso
   //queremos uni-los, passamos o separador '' vazio.
+  //"DateTimeFormat" poderia passar "pt-br" como parametro, porém deixamos vazio para ele utilizar a localizacao de acordo com navegador
+  //A saída será no modelo DD/MM/AAA
+
   //Template da tabela para mostrar as negociacoes
   template(model: Negociacoes): string {
     return ` 
@@ -25,7 +28,7 @@ export class NegociacoesView {
           ${model.listar().map(negociacao => {
             return `
               <tr>
-                <td>${negociacao.data}</td>
+                <td>${new Intl.DateTimeFormat().format(negociacao.data)}</td>
                 <td>${negociacao.quantidade}</td>
                 <td>${negociacao.valor}</td>
               </tr>
