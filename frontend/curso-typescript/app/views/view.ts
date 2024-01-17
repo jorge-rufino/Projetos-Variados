@@ -15,7 +15,7 @@ export abstract class View<T> {
   //Colocar "protected" nos filhos quando implementarem tb para restringir o acesso.
   protected abstract template(model: T): string;
 
-  update(model: T): void {
+  public update(model: T): void {
     this.elemento.innerHTML = this.template(model);
   }
 }
