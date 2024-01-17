@@ -11,7 +11,9 @@ export abstract class View<T> {
     this.elemento = document.querySelector(seletor) as HTMLElement;
   }
 
-  abstract template(model: T): string;
+  //Protected pois somente os filhos que são obrigados a implementa-lo devem ter acesso a ele.
+  //Colocar "protected" nos filhos quando implementarem tb para restringir o acesso.
+  protected abstract template(model: T): string;
 
   update(model: T): void {
     this.elemento.innerHTML = this.template(model);

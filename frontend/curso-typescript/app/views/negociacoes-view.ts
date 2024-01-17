@@ -9,7 +9,7 @@ export class NegociacoesView extends View<Negociacoes>{
   //A saída será no modelo DD/MM/AAA
 
   //Template da tabela para mostrar as negociacoes
-  template(model: Negociacoes): string {
+  protected template(model: Negociacoes): string {
     return ` 
     <table class="table table-hover table-bordered">
       <thead>
