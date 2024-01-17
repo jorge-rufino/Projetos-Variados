@@ -15,18 +15,13 @@ export class NegociacaoController {
     this.inputQuantidade = document.querySelector('#quantidade') as HTMLInputElement;
     this.inputValor = document.querySelector('#valor') as HTMLInputElement;
     this.formulario = document.querySelector('.form') as HTMLFormElement;
-    this.negociacoesView.update();
+    this.negociacoesView.update(this.negociacoes);
   }
 
   adiciona(): void {        
     const negociacao = this.criaNegociacao();
     this.negociacoes.adicionar(negociacao);        
-
-    negociacao.data.setDate(12);
-    
-    //Como alteramos o retorno do metodo "listar", se tentarmos usar metodos que modificam o array, dará erro.
-    //this.negociacoes.listar().pop()
-    console.log(this.negociacoes.listar());
+    this.negociacoesView.update(this.negociacoes);
     this.limparFormulario();
   }
   
