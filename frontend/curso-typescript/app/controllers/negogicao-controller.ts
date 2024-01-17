@@ -11,6 +11,8 @@ export class NegociacaoController {
   private negociacoes = new Negociacoes();
   private negociacoesView = new NegociacoesView('#negociacoesView');
   private mensagemView = new MensagemView('#mensagemView');
+  private DOMINGO = 0;
+  private SABADO = 6;
 
   constructor() {
     this.inputData = document.querySelector('#data') as HTMLDataElement;
@@ -22,18 +24,21 @@ export class NegociacaoController {
 
   public adiciona(): void {        
     const negociacao = this.criaNegociacao();
-
-    //"getDay()" retorna qual o dia da semana. 0 é igual a domingo e 6 é igual sábado.
-    if (negociacao.data.getDay() > 0 && negociacao.data.getDay() < 6){
-        this.negociacoes.adicionar(negociacao);
-        this.limparFormulario();
-        this.atualizaView();
-    } else {
+    
+    if (!this.diaUtil(negociacao.data)){
       this.mensagemView.update('Apenas negociações em dias úteis serão aceitas!');
-    }
+      return;
+    } 
 
+    this.negociacoes.adicionar(negociacao);
+    this.limparFormulario();
+    this.atualizaView();    
   }
   
+  private diaUtil(data: Date){
+    return data.getDay() > this.DOMINGO && data.getDay() < this.SABADO;
+  }
+
   private criaNegociacao(): Negociacao {
     const data = new Date(this.inputData.value + 'T00:00:00');    
     const quantidade = this.inputQuantidade.valueAsNumber;
