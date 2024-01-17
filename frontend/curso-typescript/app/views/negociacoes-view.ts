@@ -1,12 +1,7 @@
 import { Negociacoes } from "../models/negociacoes.js";
+import { View } from "./view.js";
 
-export class NegociacoesView {
-
-  private elemento: HTMLElement;
-
-  constructor(seletor: string){
-    this.elemento = document.querySelector(seletor) as HTMLElement;
-  }
+export class NegociacoesView extends View<Negociacoes>{
 
   //O map retorna um array, então usamos o "join" para ele juntar tudo. O parametro serve para separar os arrays e como neste caso
   //queremos uni-los, passamos o separador '' vazio.
@@ -37,9 +32,5 @@ export class NegociacoesView {
       </tbody>
     </table>
     `;
-  }
-
-  update(model: Negociacoes): void {
-    this.elemento.innerHTML = this.template(model);
   }
 }
