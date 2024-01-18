@@ -23,7 +23,9 @@ export function mostrarTempoExecucao() {
       const t2 = performance.now();
       console.log(`Metodo ${propertyKey}(), tempo de execução: ${(t2-t1) / 1000} segundos.`);
 
-      retorno;
+      //Precisamos do "return" para retornar a execução do método original. Em métodos "void a falta de retorno não causa problemas
+      //Mas em métodos com retorno, causaria problemas na aplicação.
+      return retorno;
     };
 
     return descriptor;
