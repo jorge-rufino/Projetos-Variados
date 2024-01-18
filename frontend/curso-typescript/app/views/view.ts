@@ -15,6 +15,10 @@ export abstract class View<T> {
   constructor(seletor: string, escapar?: boolean) {
     this.elemento = document.querySelector(seletor) as HTMLElement;
 
+    if(!this.elemento){
+      throw Error(`Seletor ${seletor} não existe no DOM. Verifique o código.`);
+    }
+
     if(escapar) {
       this.escapar = escapar;
     }
