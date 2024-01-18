@@ -12,7 +12,7 @@ export function mostrarTempoExecucao(emSegundos: boolean = false) {
 
     //sobrescrevemos o método original por este, e como o método orinal pode ter N parametros, usamos um array para recebe-los
     descriptor.value = function (...args: any[]) {
-      
+
       let unidade = 'milisegundos';
       let divisor = 1;
 
@@ -35,6 +35,32 @@ export function mostrarTempoExecucao(emSegundos: boolean = false) {
       //Mas em métodos com retorno, causaria problemas na aplicação.
       return retorno;
     };
+
+    return descriptor;
+  }
+}
+
+export function inspecionarMetodo() {
+  return function (
+    target: any,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
+
+    const metodoOriginal = descriptor.value;
+
+    descriptor.value = function (...args: any[]) {
+      
+      const retorno = metodoOriginal.apply(this,args);
+
+      console.log(`
+        --- Método: ${propertyKey}
+        --- Parâmetros: ${JSON.stringify(args)}
+        --- Retorno: ${JSON.stringify(retorno)}
+      `);
+
+      return retorno;
+    }
 
     return descriptor;
   }

@@ -1,4 +1,4 @@
-import { mostrarTempoExecucao } from "../decorators/decorators.js";
+import { inspecionarMetodo, mostrarTempoExecucao } from "../decorators/decorators.js";
 
 //métodos "abstratos". Quando um método é abstrato, ele passa a responsabilidade de implementação para quem herdar a classe.
 export abstract class View<T> {
@@ -29,7 +29,8 @@ export abstract class View<T> {
 
   //Agora nós estamos protegendo o template para caso alguem mal intencionado tente passar um script nele
   //Ele seja removido
-  @mostrarTempoExecucao(true)
+  @mostrarTempoExecucao(true) 
+  @inspecionarMetodo() 
   public update(model: T): void {
     let template = this.template(model);
     if(this.escapar){
