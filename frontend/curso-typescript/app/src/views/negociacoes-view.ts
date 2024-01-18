@@ -1,3 +1,4 @@
+import { escapar } from "../decorators/decorators.js";
 import { Negociacoes } from "../models/negociacoes.js";
 import { View } from "./view.js";
 
@@ -8,7 +9,7 @@ export class NegociacoesView extends View<Negociacoes>{
   //"DateTimeFormat" poderia passar "pt-br" como parametro, porém deixamos vazio para ele utilizar a localizacao de acordo com navegador
   //A saída será no modelo DD/MM/AAA
 
-  //Template da tabela para mostrar as negociacoes
+  @escapar
   protected template(model: Negociacoes): string {
     return ` 
     <table class="table table-hover table-bordered">
@@ -16,7 +17,7 @@ export class NegociacoesView extends View<Negociacoes>{
           <tr>
               <th>DATA</th>
               <th>QUANTIDADE</th>
-              <th>VALOR</th>
+              <th>VALOR</th>              
           </tr>
       </thead>
       <tbody>
@@ -28,9 +29,9 @@ export class NegociacoesView extends View<Negociacoes>{
                 <td>${negociacao.valor}</td>
               </tr>
             `;
-          }).join('')}
+          }).join('')}          
       </tbody>
-    </table>
+    </table>    
     `;
   }
 
