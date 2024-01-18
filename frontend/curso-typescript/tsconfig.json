@@ -7,13 +7,13 @@
     "noImplicitAny": true,                               /*Faz com o TS não adote o tipo implicito "any". Voce pode utilizar definindo manunalmente*/ 
     /* Type Checking */
     "strict": true,                                      /* Enable all strict type-checking options. */ 
-    "outDir": "dist/js",
+    "outDir": "app/dist/js",
     /* Completeness */    
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
     "removeComments": true,                               /* Remove os comentários somente dos arquivos Javascript*/
     "strictNullChecks": true                              /* Verifica os campos que podem ser "null" para serem tratados*/
   },
   "include": [
-    "app/**/*"
+    "app/src/**/*"
   ]
 }
