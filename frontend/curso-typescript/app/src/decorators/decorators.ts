@@ -1,6 +1,6 @@
 import { MensagemView } from "../views/mensagem-view";
 
-export function mostrarTempoExecucao() {
+export function mostrarTempoExecucao(emSegundos: boolean = false) {
   return function (
     target: any,
     propertyKey: string,
@@ -11,8 +11,16 @@ export function mostrarTempoExecucao() {
     const metodoOriginal = descriptor.value;
 
     //sobrescrevemos o método original por este, e como o método orinal pode ter N parametros, usamos um array para recebe-los
-    descriptor.value = function(...args: any[]) {
+    descriptor.value = function (...args: any[]) {
       
+      let unidade = 'milisegundos';
+      let divisor = 1;
+
+      if (emSegundos) {
+        unidade = 'segundos';
+        divisor = 1000;
+      }
+
       const t1 = performance.now();
 
       //Executamos o método original passando a lista de argumentos
@@ -21,7 +29,7 @@ export function mostrarTempoExecucao() {
       const retorno = metodoOriginal.apply(this, args);
 
       const t2 = performance.now();
-      console.log(`Metodo ${propertyKey}(), tempo de execução: ${(t2-t1) / 1000} segundos.`);
+      console.log(`Metodo ${propertyKey}(), tempo de execução: ${(t2 - t1) / divisor} ${unidade}.`);
 
       //Precisamos do "return" para retornar a execução do método original. Em métodos "void a falta de retorno não causa problemas
       //Mas em métodos com retorno, causaria problemas na aplicação.

@@ -29,7 +29,7 @@ export abstract class View<T> {
 
   //Agora nós estamos protegendo o template para caso alguem mal intencionado tente passar um script nele
   //Ele seja removido
-  @mostrarTempoExecucao()
+  @mostrarTempoExecucao(true)
   public update(model: T): void {
     let template = this.template(model);
     if(this.escapar){
