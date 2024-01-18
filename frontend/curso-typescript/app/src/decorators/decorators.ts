@@ -1,5 +1,6 @@
 import { MensagemView } from "../views/mensagem-view";
 
+//Função padrão de decorator que aceita parametros. Usa parenteses. Ex. "@mostrarTempoExecucao()"
 export function mostrarTempoExecucao(emSegundos: boolean = false) {
   return function (
     target: any,
@@ -40,28 +41,27 @@ export function mostrarTempoExecucao(emSegundos: boolean = false) {
   }
 }
 
-export function inspecionarMetodo() {
-  return function (
-    target: any,
-    propertyKey: string,
-    descriptor: PropertyDescriptor
-  ) {
+//Função simplificada. Ao decorar um método não usa parenteses. Ex. "@inspecionarMetodo"
+export function inspecionarMetodo(
+  target: any,
+  propertyKey: string,
+  descriptor: PropertyDescriptor
+) {
 
-    const metodoOriginal = descriptor.value;
+  const metodoOriginal = descriptor.value;
 
-    descriptor.value = function (...args: any[]) {
-      
-      const retorno = metodoOriginal.apply(this,args);
+  descriptor.value = function (...args: any[]) {
 
-      console.log(`
+    const retorno = metodoOriginal.apply(this, args);
+
+    console.log(`
         --- Método: ${propertyKey}
         --- Parâmetros: ${JSON.stringify(args)}
         --- Retorno: ${JSON.stringify(retorno)}
       `);
 
-      return retorno;
-    }
-
-    return descriptor;
+    return retorno;
   }
+
+  return descriptor;
 }

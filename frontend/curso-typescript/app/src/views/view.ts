@@ -30,7 +30,7 @@ export abstract class View<T> {
   //Perceba que a ordem que os 'decorators' são executados parece está invertida porém eles são executados de cima pra baixo.
   //Porém ao executar "inspecionarMetodo", dentro dele é chamado o método "update" antes de fazer o retorno, e o "update" tem o 
   //"mostrarTempoExecucao" como decorator, então ele vai executar este decorator primeiro para poder finalizar o "inspecionarMetodo"
-  @inspecionarMetodo() 
+  @inspecionarMetodo 
   @mostrarTempoExecucao(true) 
   public update(model: T): void {
     let template = this.template(model);
