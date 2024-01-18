@@ -9,7 +9,9 @@
     "strict": true,                                      /* Enable all strict type-checking options. */ 
     "outDir": "dist/js",
     /* Completeness */    
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
+    "removeComments": true,                               /* Remove os comentários somente dos arquivos Javascript*/
+    "strictNullChecks": true                              /* Verifica os campos que podem ser "null" para serem tratados*/
   },
   "include": [
     "app/**/*"
