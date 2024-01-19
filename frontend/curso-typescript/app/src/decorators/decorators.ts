@@ -102,3 +102,46 @@ export function domInjector(seletor: string) {
       );
   }
 }
+
+//Exemplo de decorator para modificar propriedade String
+function MinLength(minLength: number) {
+  return function (target: any, propertyKey: string) {
+    let value = target[propertyKey];
+    
+    //Será chamado quando quisermos obter o valor da propriedade decorada
+    const getter = () => {
+     return value.toUpperCase();
+    };
+
+    //Será chamado quando quisermos atribuir um valor a propriedade decorada
+    const setter = (newValue: string) => {
+      if (newValue.length < minLength) {
+        throw new Error(`O valor deve ter no mínimo ${minLength} caracteres.`);
+      }
+      value = newValue;
+    };
+
+    //Quando quisermos saber o valor da propriedade, o "get" será usado
+    //Quando quisermos atribuir um valor para a propriedade, o "set" será usado
+    Object.defineProperty(target, propertyKey, {
+      get: getter,
+      set: setter,
+    });
+  };
+}
+
+class Person {
+  @MinLength(6)
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+
+//Perceba que quando estamos atribuindo um valor para a propriedade "name", o a função "setter" do decorator entrará em ação
+//validando o tamanho minimo da string.
+//Quando queremos saber o valor da propriedade "name", a função "getter" do decorator entrará em ação, fazendo com que a string
+//fique toda em letra maiuscula.
+const person = new Person("JoRGe"); // Erro: O valor deve ter no mínimo 6 caracteres.
+console.log(person.name);
