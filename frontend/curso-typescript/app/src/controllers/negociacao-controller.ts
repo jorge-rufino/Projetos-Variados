@@ -1,4 +1,4 @@
-import { mostrarTempoExecucao } from "../decorators/decorators.js";
+import { domInjector, mostrarTempoExecucao } from "../decorators/decorators.js";
 import { DiaDaSemana } from "../enums/dias-da-semana.js";
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
@@ -6,24 +6,26 @@ import { MensagemView } from "../views/mensagem-view.js";
 import { NegociacoesView } from "../views/negociacoes-view.js";
 
 export class NegociacaoController {
+
+  @domInjector('#data')
   private inputData: HTMLDataElement;
+  @domInjector('#quantidade')
   private inputQuantidade: HTMLInputElement;
+  @domInjector('#valor')
   private inputValor: HTMLInputElement;
+  @domInjector('.form')
   private formulario: HTMLFormElement;
+  
   private negociacoes = new Negociacoes();
   private negociacoesView = new NegociacoesView('#negociacoesView');
   private mensagemView = new MensagemView('#mensagemView');  
 
-  constructor() {
-    this.inputData = document.querySelector('#data') as HTMLDataElement;
-    this.inputQuantidade = document.querySelector('#quantidade') as HTMLInputElement;
-    this.inputValor = document.querySelector('#valor') as HTMLInputElement;
-    this.formulario = document.querySelector('.form') as HTMLFormElement;
+  constructor() {    
     this.negociacoesView.update(this.negociacoes);
   }
 
   @mostrarTempoExecucao()
-  public adiciona(): void {            
+  public adiciona(): void {       
     const negociacao = Negociacao.criaNegociacao(
       this.inputData.value,
       this.inputQuantidade.value,

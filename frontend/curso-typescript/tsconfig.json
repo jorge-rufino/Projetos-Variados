@@ -6,13 +6,14 @@
     "noEmitOnError": true,
     "noImplicitAny": true,                               /*Faz com o TS não adote o tipo implicito "any". Voce pode utilizar definindo manunalmente*/ 
     /* Type Checking */
-    "strict": true,                                      /* Enable all strict type-checking options. */ 
+    "strict": false,                                     /* Mudei para parar o erro ao utilizar domInject e pedir para inicializar no construtor. */ 
     "outDir": "app/dist/js",
     /* Completeness */    
     "skipLibCheck": true,                                /* Skip type checking all .d.ts files. */
     "removeComments": true,                              /* Remove os comentários somente dos arquivos Javascript*/
     "strictNullChecks": true,                            /* Verifica os campos que podem ser "null" para serem tratados*/
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false                     /* ES2022+ o padrão é "true", tem que alterar para funcionar o "domInject"*/
   },
   "include": [
     "app/src/**/*"

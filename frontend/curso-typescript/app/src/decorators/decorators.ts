@@ -1,5 +1,3 @@
-import { MensagemView } from "../views/mensagem-view";
-
 //Função padrão de decorator que aceita parametros. Usa parenteses. Ex. "@mostrarTempoExecucao()"
 export function mostrarTempoExecucao(emSegundos: boolean = false) {
   return function (
@@ -42,10 +40,7 @@ export function mostrarTempoExecucao(emSegundos: boolean = false) {
 }
 
 //Função simplificada. Ao decorar um método não usa parenteses. Ex. "@inspecionarMetodo"
-export function inspecionarMetodo(
-  target: any,
-  propertyKey: string,
-  descriptor: PropertyDescriptor
+export function inspecionarMetodo(target: any, propertyKey: string, descriptor: PropertyDescriptor
 ) {
 
   const metodoOriginal = descriptor.value;
@@ -68,17 +63,36 @@ export function inspecionarMetodo(
 
 export function escapar(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
   const metodoOriginal = descriptor.value;
- 
+
   descriptor.value = function (...args: any[]) {
     let retorno = metodoOriginal.apply(this, args);
-    
+
     //Verifica se o retorno é uma String
-    if(typeof retorno === 'string'){
-      retorno =  retorno.replace(/<script>[\s\S]*?<\/script>/,'');      
+    if (typeof retorno === 'string') {
+      retorno = retorno.replace(/<script>[\s\S]*?<\/script>/, '');
     }
-    
+
     return retorno;
   }
 
   return descriptor;
+}
+
+//Pega o DOM do document e adiciona na variavel decorada.
+export function domInjector(seletor: string) {
+  return function (target: any, propertyKey: string) {
+    //console.log(`Modificando prototype ${target.constructor.name} e adicionando getter para a propriedade ${propertyKey}`);
+    const getter = function() {
+      const elemento = document.querySelector(seletor);
+
+      //console.log(`Buscando elemento DOM com o seletor ${seletor} para injetar em ${propertyKey}`);
+      return elemento;
+    }
+
+    Object.defineProperty(
+      target, 
+      propertyKey,
+      { get: getter }
+      );
+  }
 }
