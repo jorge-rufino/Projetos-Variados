@@ -82,11 +82,17 @@ export function escapar(target: any, propertyKey: string, descriptor: PropertyDe
 export function domInjector(seletor: string) {
   return function (target: any, propertyKey: string) {
     //console.log(`Modificando prototype ${target.constructor.name} e adicionando getter para a propriedade ${propertyKey}`);
-    const getter = function() {
-      const elemento = document.querySelector(seletor);
 
-      //console.log(`Buscando elemento DOM com o seletor ${seletor} para injetar em ${propertyKey}`);
-      return elemento;
+    let elemento: HTMLElement | null = null;
+
+    //Chegando o elemento, evita de todas vez que for adicionada um negociação, a função seja executada.
+    const getter = function() {
+      if(!elemento){
+        elemento = document.querySelector(seletor);
+        console.log(`Buscando elemento DOM com o seletor ${seletor} para injetar em ${propertyKey}`);
+      }      
+
+      return elemento;      
     }
 
     Object.defineProperty(
