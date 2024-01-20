@@ -1,7 +1,9 @@
 import { domInjector, mostrarTempoExecucao } from "../decorators/decorators.js";
 import { DiaDaSemana } from "../enums/dias-da-semana.js";
+import { NegociacaoApi } from "../interfaces/negociacao-api.js";
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
+import { NegociacaoService } from "../services/negociacao-service.js";
 import { MensagemView } from "../views/mensagem-view.js";
 import { NegociacoesView } from "../views/negociacoes-view.js";
 
@@ -19,6 +21,7 @@ export class NegociacaoController {
   private negociacoes = new Negociacoes();
   private negociacoesView = new NegociacoesView('#negociacoesView');
   private mensagemView = new MensagemView('#mensagemView');  
+  private negociacaoService = new NegociacaoService();
 
   constructor() {    
     this.negociacoesView.update(this.negociacoes);
@@ -44,18 +47,8 @@ export class NegociacaoController {
 
   //Importa dados da API
   importarDadosApi(): void {
-    fetch('http://localhost:8080/dados')
-      .then(response => { 
-        return response.json();     //Converter os dados para JSON
-      })
-      //Pega os dados da API e converte em uma lista de Negociacoes
-      //Perceba que não usamos o metodo "criarNegociacao" aqui pois quando é feita a conversão, os números permanecem como números.
-      //e no metodo "criarNegociao" todos os parametros são "string".
-      .then((dados: any[]) => {
-        return dados.map(elemento => {
-          return new Negociacao(new Date(), elemento.vezes, elemento.montante);
-        });
-      })
+    this.negociacaoService
+      .obterNegociacoesApi()
       .then(negociacoesApi => {
         for(let negociacao of negociacoesApi){
           this.negociacoes.adicionar(negociacao);
