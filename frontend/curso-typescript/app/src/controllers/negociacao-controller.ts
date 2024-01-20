@@ -41,6 +41,33 @@ export class NegociacaoController {
     this.limparFormulario();
     this.atualizaView();    
   }
+
+  //Importa dados da API
+  importarDadosApi(): void {
+    fetch('http://localhost:8080/dados')
+      .then(response => { 
+        return response.json();     //Converter os dados para JSON
+      })
+      //Pega os dados da API e converte em uma lista de Negociacoes
+      //Perceba que não usamos o metodo "criarNegociacao" aqui pois quando é feita a conversão, os números permanecem como números.
+      //e no metodo "criarNegociao" todos os parametros são "string".
+      .then((dados: any[]) => {
+        return dados.map(elemento => {
+          return new Negociacao(new Date(), elemento.vezes, elemento.montante);
+        });
+      })
+      .then(negociacoesApi => {
+        for(let negociacao of negociacoesApi){
+          this.negociacoes.adicionar(negociacao);
+        }
+
+        //Atualiza a view com os dados da API
+        this.negociacoesView.update(this.negociacoes);
+      })
+      .catch(error => {
+         throw Error ('Erro ao importar dados da API:', error.message);        
+      });
+  }
   
   private diaUtil(data: Date){
     return data.getDay() > DiaDaSemana.DOMINGO 
