@@ -1,9 +1,9 @@
 import { domInjector, mostrarTempoExecucao } from "../decorators/decorators.js";
 import { DiaDaSemana } from "../enums/dias-da-semana.js";
-import { NegociacaoApi } from "../interfaces/negociacao-api.js";
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
 import { NegociacaoService } from "../services/negociacao-service.js";
+import { imprimir } from "../utils/imprimir.js";
 import { MensagemView } from "../views/mensagem-view.js";
 import { NegociacoesView } from "../views/negociacoes-view.js";
 
@@ -43,6 +43,8 @@ export class NegociacaoController {
     this.negociacoes.adicionar(negociacao);
     this.limparFormulario();
     this.atualizaView();    
+    
+    imprimir(negociacao, this.negociacoes);
   }
 
   //Importa dados da API
