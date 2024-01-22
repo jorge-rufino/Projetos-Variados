@@ -1,7 +1,6 @@
-import { Comparavel } from "../interfaces/comparavel.js";
-import { Imprimivel } from "../utils/imprimivel.js";
+import { Modelo } from "../interfaces/modelo.js";
 
-export class Negociacao implements Imprimivel, Comparavel<Negociacao> {
+export class Negociacao implements Modelo<Negociacao> {
 
   //Definimos as propriedades de classe como "public" e "readyonly", assim depois de atribuitos seus valores pelo construtor
   //não será mais possível altera-los.
