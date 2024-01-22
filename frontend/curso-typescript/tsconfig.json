@@ -13,7 +13,8 @@
     "removeComments": true,                              /* Remove os comentários somente dos arquivos Javascript*/
     "strictNullChecks": true,                            /* Verifica os campos que podem ser "null" para serem tratados*/
     "experimentalDecorators": true,
-    "useDefineForClassFields": false                     /* ES2022+ o padrão é "true", tem que alterar para funcionar o "domInject"*/
+    "useDefineForClassFields": false,                    /* ES2022+ o padrão é "true", tem que alterar para funcionar o "domInject"*/
+    "sourceMap": true                                    /* Gera um novo arquivo JS para podermos debugar usando os arquivos TS*/
   },
   "include": [
     "app/src/**/*"
