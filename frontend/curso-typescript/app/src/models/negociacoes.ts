@@ -1,8 +1,7 @@
 import { Imprimivel } from "../utils/imprimivel.js";
 import { Negociacao } from "./negociacao.js";
 
-//Como aqui não temos construtor, não precisamos chamar o construtor da superclasse
-export class Negociacoes extends Imprimivel {
+export class Negociacoes implements Imprimivel {
   private listaNegociacoes: Negociacao[] = [];
 
   adicionar(negociacao: Negociacao): void{
@@ -14,7 +13,7 @@ export class Negociacoes extends Imprimivel {
     return this.listaNegociacoes;
   }
 
-  public toString(): string {
+  public paraTexto(): string {
     //"2" é o espaçamento para formatação
     return JSON.stringify(this.listaNegociacoes, null, 2);
   }

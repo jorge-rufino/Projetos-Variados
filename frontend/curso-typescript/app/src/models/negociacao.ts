@@ -1,17 +1,13 @@
 import { Imprimivel } from "../utils/imprimivel.js";
 
-export class Negociacao extends Imprimivel{
+export class Negociacao implements Imprimivel{
   
   //Definimos as propriedades de classe como "public" e "readyonly", assim depois de atribuitos seus valores pelo construtor
   //não será mais possível altera-los.
   constructor(
     private _data: Date, 
     public readonly quantidade: number, 
-    public readonly valor: number){
-      
-      //Quando herdamos classes abstratas e temos um construtor implementado, é obrigatório chamar o construtor da superclasse
-      super();
-    }
+    public readonly valor: number){ }
     
     //Como um objeto "Date" tem o metodo "setDate" que permite alterar uma data mesmo sendo "readonly", programamos defensivamente
     //criando uma nova data com base da data original para evitar alteraçoes no objeto/data original.
@@ -32,7 +28,7 @@ export class Negociacao extends Imprimivel{
       return new Negociacao(data, quantidade, valor);
     }
 
-    public toString(): string {
+    public paraTexto(): string {
       return `
         Data: ${this.data},
         Quantidade: ${this.quantidade}
