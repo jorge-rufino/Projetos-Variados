@@ -51,6 +51,18 @@ export class NegociacaoController {
   importarDadosApi(): void {
     this.negociacaoService
       .obterNegociacoesApi()
+
+      //Verificamos se as negociacoes da Api já existem em nossa lista de Negociacoes para evitar duplicidade
+      .then(negociacoesApi => {
+        return negociacoesApi.filter(negocicacaoApi => {
+        
+        //"Negamos" pois quando as negociacoes são iguais, o "some" irá retornar "true" e quando é true o "filter" pega este objeto
+        //então precisamos "negar" para pegar os que não são iguais.
+            return !this.negociacoes
+              .listar()
+              .some(negociacao => negociacao.ehIgual(negocicacaoApi))
+        });
+      })
       .then(negociacoesApi => {
         for(let negociacao of negociacoesApi){
           this.negociacoes.adicionar(negociacao);
