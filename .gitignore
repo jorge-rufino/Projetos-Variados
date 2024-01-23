@@ -71,9 +71,15 @@ node_modules
 bower_components
 
 # Editors
-.idea
 *.iml
 .vscode/
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
 # OS metadata
 .DS_Store
@@ -82,25 +88,10 @@ Thumbs.db
 # ignore yarn.lock
 yarn.lock
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
-
 # Node
 /node_modules
 npm-debug.log
 yarn-error.log
-
-# IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
 
 # Visual Studio Code
 .vscode/*
