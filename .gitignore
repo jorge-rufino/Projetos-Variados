@@ -28,13 +28,20 @@ hs_err_pid*
 .metadata/
 
 # build folders
-bin/
-target/
-nbproject/private/
+**bin/
+**target/
+**nbproject/private/
 build/
 nbbuild/
 dist/
 nbdist/ 
+**/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
 
 # Arquivos Hmtl
 frontend/curso/
@@ -100,15 +107,6 @@ yarn-error.log
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
-
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
 
 # System files
 .DS_Store
