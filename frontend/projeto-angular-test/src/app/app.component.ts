@@ -3,13 +3,23 @@ import { Component } from "@angular/core";
 @Component({
   selector: "app-root",
   template: ` 
-    <h1>
-      Desafio Aula 1
-    </h1> 
-    <app-desafio></app-desafio>
+    <div>
+      <h1 [ngClass]="{'color-blue': active}">
+        Home!
+      </h1>
+      <button (click)="colorBlue()">
+          Mudar cor
+      </button>
+    </div>
     `,
   styles: [],
 })
 export class AppComponent {
-  title = "projeto-angular-test";
+  active: boolean = true;
+ 
+  constructor() { }
+ 
+  colorBlue(){
+    this.active = !this.active
+  }
 }
