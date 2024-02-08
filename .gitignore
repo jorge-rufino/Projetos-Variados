@@ -111,3 +111,43 @@ yarn-error.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Compiled output
+frontend/sobre-componente/dist
+frontend/sobre-componente/tmp
+frontend/sobre-componente/out-tsc
+frontend/sobre-componente/bazel-out
+
+# Node
+frontend/sobre-componente/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+frontend/sobre-componente/idea/
+frontend/sobre-componente/project
+frontend/sobre-componente/classpath
+frontend/sobre-componente/c9/
+*.launch
+frontend/sobre-componente/settings/
+*.sublime-workspace
+
+# Visual Studio Code
+frontend/sobre-componente/vscode/*
+!frontend/sobre-componente/vscode/settings.json
+!frontend/sobre-componente/vscode/tasks.json
+!frontend/sobre-componente/vscode/launch.json
+!frontend/sobre-componente/vscode/extensions.json
+frontend/sobre-componente/history/*
+
+# Miscellaneous
+frontend/sobre-componente/.angular/cache
+frontend/sobre-componente/sass-cache/
+frontend/sobre-componente/connect.lock
+frontend/sobre-componente/coverage
+frontend/sobre-componente/libpeerconnection.log
+testem.log
+frontend/sobre-componente/typings
+
+# System files
+frontend/sobre-componente/DS_Store
