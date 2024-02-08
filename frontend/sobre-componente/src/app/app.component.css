@@ -1,0 +1,12 @@
+header {
+  background: linear-gradient(145deg,#0d47a1,#1976d2);
+}
+
+.container {
+  padding: 2rem 0;
+  width: 82%;
+  margin: 0 auto;
+
+  color: #fff;
+  font-family: sans-serif;
+}
